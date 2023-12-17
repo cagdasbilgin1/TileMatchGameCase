@@ -16,6 +16,7 @@ namespace CollapseBlast
         
 		ItemController _item;
         Board _board;
+		float _distanceBetweenItems;
 
         List<Cell> _neighbours = new List<Cell>();
 		public List<Cell> Neighbours => _neighbours;
@@ -48,9 +49,11 @@ namespace CollapseBlast
 			X = x;
 			Y = y;
 			var gameManager = GameManager.Instance;
-			IsTopRowCell = Y == gameManager.Level.Rows - 1;
+			var level = gameManager.Level;
+			IsTopRowCell = Y == level.Rows - 1;
+			_distanceBetweenItems = level.DistanceBetweenItems;
 			_board = gameManager.Board;
-			transform.localPosition = new Vector3(x,y);
+			transform.localPosition = new Vector3(x * _distanceBetweenItems, y * _distanceBetweenItems);
             ArrangeCellName();
 			UpdateNeighbours();
 		}

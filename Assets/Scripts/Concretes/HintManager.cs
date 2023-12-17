@@ -89,7 +89,7 @@ namespace CollapseBlast.Manager
                     if (matchedCellInfos[x, y] == -1 && cell.Item != null)
                     {
                         var partOfMatchedCells = matchFinder.FindMatch(cell, cell.Item.ItemType);
-                        FillMatchedCellInfos(partOfMatchedCells, matchedCellInfos);
+                        //FillMatchedCellInfos(partOfMatchedCells, matchedCellInfos);
                     }
                     i++;
                 }

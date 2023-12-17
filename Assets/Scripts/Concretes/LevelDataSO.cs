@@ -10,6 +10,9 @@ namespace CollapseBlast.ScriptableObjects
     {
         [Tooltip("M")][SerializeField] int rows;
         [Tooltip("N")][SerializeField] int columns;
+        [SerializeField] float distanceBetweenItems;
+        [SerializeField] float usableScreenWidthRatio;
+        [SerializeField] float usableScreenHeightRatio;
         [Tooltip("K")][SerializeField] List<ItemType> colors;
         [Tooltip("A")][SerializeField] int firstSpecialIconTypeThreshold;
         [Tooltip("B")][SerializeField] int secondSpecialIconTypeThreshold;
@@ -23,6 +26,9 @@ namespace CollapseBlast.ScriptableObjects
 
         public int Rows => rows;
         public int Columns => columns;
+        public float DistanceBetweenItems => distanceBetweenItems;
+        public float UsableScreenWidthRatio => usableScreenWidthRatio;
+        public float UsableScreenHeightRatio => usableScreenHeightRatio;
         public List<ItemType> ItemTypes => colors;
         public int FirstSpecialIconTypeThreshold => firstSpecialIconTypeThreshold;
         public int SecondSpecialIconTypeThreshold => secondSpecialIconTypeThreshold;

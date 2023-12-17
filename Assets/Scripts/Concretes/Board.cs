@@ -13,15 +13,16 @@ namespace CollapseBlast
         public Transform CellsParent;
         public Transform ItemsParent;
         public Transform ParticlesAnimationsParent;
-        public SpriteRenderer BoardOutsideSprite;
-        public SpriteRenderer BoardInsideSprite;
         public SpriteMask BoardMask;
         [HideInInspector] public List<Cell> Cells;
         GameManager _gameManager;
         SoundManager _soundManager;
         ItemManager _itemManager;
         MatchFinder _matchFinder;
-        private int _columns, _rows;
+        int _columns, _rows;
+        float _distanceBetweenItems;
+        float _usableScreenWidthRatio;
+        float _usableScreenHeightRatio;
 
         public void Init()
         {
@@ -30,6 +31,9 @@ namespace CollapseBlast
             var gamePlayCanvas = _gameManager.CanvasManager.GamePlayCanvas;
             _columns = _gameManager.Level.Columns;
             _rows = _gameManager.Level.Rows;
+            _distanceBetweenItems = _gameManager.Level.DistanceBetweenItems;
+            _usableScreenWidthRatio = _gameManager.Level.UsableScreenWidthRatio;
+            _usableScreenHeightRatio = _gameManager.Level.UsableScreenHeightRatio;
             _itemManager = _gameManager.ItemManager;
             _matchFinder = new MatchFinder();
             _gameManager.metaSceneOpenedEvent += ClearObsoleteParticlesAnimations;
@@ -42,8 +46,8 @@ namespace CollapseBlast
 
         void ArrangeBoardPosition()
         {
-            var xPos = (_columns / -2f) + .5f;
-            var yPos = (_rows / -2f) + .5f;
+            var xPos = _distanceBetweenItems * (_columns / -2f) + (_distanceBetweenItems / 2);
+            var yPos = _distanceBetweenItems * (_rows / -2f) + (_distanceBetweenItems / 2);
             transform.localPosition = new Vector2(xPos, yPos);
         }
 
@@ -53,25 +57,20 @@ namespace CollapseBlast
             float aspect = camera.aspect;
             float worldHeight = camera.orthographicSize * 2;
             float worldWidth = worldHeight * aspect;
-            var columnUnitWidth = worldWidth / _columns;
+            var columnUnitWidth = worldWidth / (_columns * _distanceBetweenItems);
 
-            BoardOutsideSprite.transform.localScale = new Vector2(columnUnitWidth, columnUnitWidth);
+            transform.parent.localScale = new Vector2(columnUnitWidth, columnUnitWidth);
 
             var ItemEdgeUnit = Screen.width / _columns;
             float boardHeight = ItemEdgeUnit * _rows;
             float boardWidth = ItemEdgeUnit * _columns;
-            while (boardHeight > Screen.height * .48f || boardWidth > Screen.width * .9f)
+            while (boardHeight > Screen.height * _usableScreenHeightRatio || boardWidth > Screen.width * _usableScreenWidthRatio)
             {
-                var scale = BoardOutsideSprite.transform.localScale.x;
-                BoardOutsideSprite.transform.localScale = new Vector2(scale - scale * .05f, scale - scale * .05f);
+                var scale = transform.parent.localScale.x;
+                transform.parent.localScale = new Vector2(scale - scale * .05f, scale - scale * .05f);                
                 boardHeight -= (boardHeight * .05f);
                 boardWidth -= (boardWidth * .05f);
             }
-
-            BoardOutsideSprite.size = new Vector2(_columns + .8f, _rows + .8f);
-            BoardInsideSprite.size = new Vector2(_columns + .5f, _rows + .5f);
-            var boardEdgeOffset = .15f;
-            BoardMask.transform.localScale = BoardInsideSprite.size - new Vector2(boardEdgeOffset, boardEdgeOffset);
         }
 
         private void CreateCells()
