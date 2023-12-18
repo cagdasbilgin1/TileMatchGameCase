@@ -16,13 +16,15 @@ namespace CollapseBlast.Manager
         float _distanceBetweenItems;
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
+        int _tierCount;
+        List<TierData> _tierList;
         int _levelIndex;
         int _minimumBlastableMatch;
         int _goalCount;
         int _moveCount;
         LevelDataSO _currentLevelData;
         Board _board;
-        ItemManager _itemManager;
+        //ItemManager _itemManager;
         List<ItemType> _itemTypes;
         List<LevelItem> levelItemDatas;        
 
@@ -33,6 +35,8 @@ namespace CollapseBlast.Manager
         public float DistanceBetweenItems => _distanceBetweenItems;
         public float UsableScreenWidthRatio => _usableScreenWidthRatio;
         public float UsableScreenHeightRatio => _usableScreenHeightRatio;
+        public int TierCount => _tierCount;
+        public List<TierData> TierList => _tierList;
         public int LevelIndex => _levelIndex;
         public int MinimumBlastableMatch => _minimumBlastableMatch;
         public LevelDataSO CurrentLevelData => _currentLevelData;
@@ -47,13 +51,15 @@ namespace CollapseBlast.Manager
 
             var gameManager = GameManager.Instance;
             _board = gameManager.Board;
-            _itemManager = gameManager.ItemManager;
+            //_itemManager = gameManager.ItemManager;
             _currentLevelData = levels[_levelIndex];
             _rows = _currentLevelData.Rows;
             _columns = _currentLevelData.Columns;
             _distanceBetweenItems = _currentLevelData.DistanceBetweenItems;
             _usableScreenWidthRatio = _currentLevelData.UsableScreenWidthRatio;
             _usableScreenHeightRatio = _currentLevelData.UsableScreenHeightRatio;
+            _tierCount = _currentLevelData.TierCount;
+            _tierList = _currentLevelData.TierList;
             _minimumBlastableMatch = _currentLevelData.MinimumBlastableCell;
             _itemTypes = _currentLevelData.ItemTypes;
 

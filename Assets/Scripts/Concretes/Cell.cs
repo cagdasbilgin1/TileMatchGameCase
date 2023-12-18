@@ -11,7 +11,8 @@ namespace CollapseBlast
 	{
         [HideInInspector] public int X;
 		[HideInInspector] public int Y;
-		[HideInInspector] public Cell FallStopPosition;
+		[HideInInspector] public int Tier;
+        [HideInInspector] public Cell FallStopPosition;
 		[HideInInspector] public bool IsTopRowCell;
         
 		ItemController _item;
@@ -44,10 +45,11 @@ namespace CollapseBlast
 			}
 		}
 
-		public void Init(int x, int y)
+		public void Init(int x, int y, int tier)
 		{
 			X = x;
 			Y = y;
+			Tier = tier;
 			var gameManager = GameManager.Instance;
 			var level = gameManager.Level;
 			IsTopRowCell = Y == level.Rows - 1;
@@ -87,7 +89,7 @@ namespace CollapseBlast
 
 		private void ArrangeCellName()
 		{
-			gameObject.name = $"Cell {X}:{Y}";
+			gameObject.name = $"Cell {X}:{Y} [{Tier}]";
 		}
 
 		public Cell GetFallTargetCell()

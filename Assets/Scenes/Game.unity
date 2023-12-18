@@ -2111,11 +2111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7374c7b015003e14c93dbe425e9a57dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7705602033978970750 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1388198026863299827, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
-  m_PrefabInstance: {fileID: 8767403436628893325}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8767403436628893325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2206,7 +2201,7 @@ PrefabInstance:
       objectReference: {fileID: 1866229036}
     - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: _gamePlaySceneElements.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: _gamePlaySceneElements.Array.data[0]
@@ -2215,7 +2210,7 @@ PrefabInstance:
     - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: _gamePlaySceneElements.Array.data[1]
       value: 
-      objectReference: {fileID: 7705602033978970750}
+      objectReference: {fileID: 0}
     - target: {fileID: 8767403435434524842, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: m_Name
       value: GameManager

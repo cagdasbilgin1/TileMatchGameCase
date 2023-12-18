@@ -26,3 +26,10 @@ MonoBehaviour:
   goalItemType: 5
   goalCount: 25
   movesCount: 15
+  tierCount: 1
+  tierList:
+  - cards:
+    - position: {x: 0, y: 0}
+      cardType: 0
+    - position: {x: 0, y: 0}
+      cardType: 0

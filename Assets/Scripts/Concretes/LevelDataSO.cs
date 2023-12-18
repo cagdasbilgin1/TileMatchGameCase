@@ -5,6 +5,37 @@ using UnityEngine;
 
 namespace CollapseBlast.ScriptableObjects
 {
+    enum CardType
+    {
+        Apple,
+        Banana,
+        Avocado,
+        Cherry,
+        Coconut,
+        Grape,
+        Kiwi,
+        Lemon,
+        Orange,
+        Watermelon,
+        Strawberry,
+        Mango,
+        Pineapple
+    }
+
+    [System.Serializable]
+    public class Card
+    {
+        [SerializeField] Vector2 position;
+        [SerializeField] CardType cardType;
+        
+    }
+
+    [System.Serializable]
+    public class TierData
+    {
+        [SerializeField] List<Card> cards;
+    }
+
     [CreateAssetMenu(fileName = "LevenConfigSO", menuName = "CollapseBlast/LevelConfigSO", order = 0)]
     public class LevelDataSO : ScriptableObject
     {
@@ -22,7 +53,8 @@ namespace CollapseBlast.ScriptableObjects
         [SerializeField] ItemType goalItemType;
         [SerializeField] int goalCount;
         [SerializeField] int movesCount;
-
+        [SerializeField] int tierCount;
+        [SerializeField] List<TierData> tierList = new List<TierData>();
 
         public int Rows => rows;
         public int Columns => columns;
@@ -38,6 +70,8 @@ namespace CollapseBlast.ScriptableObjects
         public ItemType GoalItemType => goalItemType;
         public int GoalCount => goalCount;
         public int MovesCount => movesCount;
+        public int TierCount => tierCount;
+        public List<TierData> TierList => tierList;
     }
 }
 

@@ -46,7 +46,7 @@ namespace CollapseBlast.Manager
         {
             Level.Init();
             Board.Init();
-            ItemManager.Init();
+            //ItemManager.Init();
             HintManager.Init();
             FallManager.Init();
             Level.FillBoard();
@@ -54,8 +54,8 @@ namespace CollapseBlast.Manager
 
         private void Update()
         {
-            FallManager.TickUpdate();
-            HintManager.TickUpdate();
+            //FallManager.TickUpdate();
+            //HintManager.TickUpdate();
         }
 
         public void EnableInput()

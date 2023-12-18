@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CollapseBlast.Manager;
 using CollapseBlast.Controller;
+using CollapseBlast.ScriptableObjects;
 
 namespace CollapseBlast
 {
@@ -23,6 +24,7 @@ namespace CollapseBlast
         float _distanceBetweenItems;
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
+        List<TierData> _tierList;
 
         public void Init()
         {
@@ -35,6 +37,7 @@ namespace CollapseBlast
             _usableScreenWidthRatio = _gameManager.Level.UsableScreenWidthRatio;
             _usableScreenHeightRatio = _gameManager.Level.UsableScreenHeightRatio;
             _itemManager = _gameManager.ItemManager;
+            _tierList = _gameManager.Level.TierList;
             _matchFinder = new MatchFinder();
             _gameManager.metaSceneOpenedEvent += ClearObsoleteParticlesAnimations;
 
@@ -76,15 +79,21 @@ namespace CollapseBlast
         private void CreateCells()
         {
             var i = 0;
-            for (var y = 0; y < _rows; y++)
+            for (int tier = 1; tier <= _tierList.Count; tier++)
             {
-                for (var x = 0; x < _columns; x++)
+                var tierTransform = new GameObject("Tier" + tier).transform;
+                tierTransform.parent = CellsParent;
+                for (var y = 0; y < _rows; y++)
                 {
-                    var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, CellsParent);
-                    cell.X = x;
-                    cell.Y = y;
-                    Cells.Add(cell);
-                    i++;
+                    for (var x = 0; x < _columns; x++)
+                    {
+                        var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, tierTransform);
+                        cell.X = x;
+                        cell.Y = y;
+                        cell.Tier = tier;
+                        Cells.Add(cell);
+                        i++;
+                    }
                 }
             }
         }
@@ -92,12 +101,15 @@ namespace CollapseBlast
         private void InitCells()
         {
             var i = 0;
-            for (var y = 0; y < _rows; y++)
+            for (int tier = 1; tier <= _tierList.Count; tier++)
             {
-                for (var x = 0; x < _columns; x++)
+                for (var y = 0; y < _rows; y++)
                 {
-                    Cells[i].Init(x, y);
-                    i++;
+                    for (var x = 0; x < _columns; x++)
+                    {
+                        Cells[i].Init(x, y, tier);
+                        i++;
+                    }
                 }
             }
         }
@@ -164,65 +176,67 @@ namespace CollapseBlast
 
         public Cell GetNeighbourWithDirection(Cell cell, Direction direction)
         {
-            var x = cell.X;
-            var y = cell.Y;
+            //var x = cell.X;
+            //var y = cell.Y;
 
-            switch (direction)
-            {
-                case Direction.Up:
-                    y += 1;
-                    break;
-                case Direction.Down:
-                    y -= 1;
-                    break;
-                case Direction.Right:
-                    x += 1;
-                    break;
-                case Direction.Left:
-                    x -= 1;
-                    break;
-                case Direction.UpRight:
-                    x += 1;
-                    y += 1;
-                    break;
-                case Direction.UpLeft:
-                    x -= 1;
-                    y += 1;
-                    break;
-                case Direction.DownRight:
-                    x += 1;
-                    y -= 1;
-                    break;
-                case Direction.DownLeft:
-                    x -= 1;
-                    y -= 1;
-                    break;
-            }
+            //switch (direction)
+            //{
+            //    case Direction.Up:
+            //        y += 1;
+            //        break;
+            //    case Direction.Down:
+            //        y -= 1;
+            //        break;
+            //    case Direction.Right:
+            //        x += 1;
+            //        break;
+            //    case Direction.Left:
+            //        x -= 1;
+            //        break;
+            //    case Direction.UpRight:
+            //        x += 1;
+            //        y += 1;
+            //        break;
+            //    case Direction.UpLeft:
+            //        x -= 1;
+            //        y += 1;
+            //        break;
+            //    case Direction.DownRight:
+            //        x += 1;
+            //        y -= 1;
+            //        break;
+            //    case Direction.DownLeft:
+            //        x -= 1;
+            //        y -= 1;
+            //        break;
+            //}
 
-            if (x >= _columns || x < 0 || y >= _rows || y < 0) return null;
+            //if (x >= _columns || x < 0 || y >= _rows || y < 0) return null;
 
-            return GetCell(x, y);
+            //return GetCell(x, y, 1);
+            return null;
         }
 
-        Cell GetCell(int x, int y)
+        Cell GetCell(int x, int y, int tier)
         {
-            return Cells.Single(cell => cell.X == x && cell.Y == y);
+            return Cells.Single(cell => cell.X == x && cell.Y == y && cell.Tier == tier);
         }
 
         public Cell GetRandomCellAtBoard()
         {
-            var x = Random.Range(0, _columns);
-            var y = Random.Range(0, _rows);
+            //var x = Random.Range(0, _columns);
+            //var y = Random.Range(0, _rows);
 
-            var cell = GetCell(x, y);
-            if (cell.Item != null && !cell.Item.IsBooster)
-            {
-                return cell;
-            }
-            else
-            {
-                return GetRandomCellAtBoard();
-            }
+            //var cell = GetCell(x, y, 1);
+            //if (cell.Item != null && !cell.Item.IsBooster)
+            //{
+            //    return cell;
+            //}
+            //else
+            //{
+            //    return GetRandomCellAtBoard();
+            //}
+            return null;
         }
 
         public List<Cell> GetCellsWithItemType(ItemType itemType)
