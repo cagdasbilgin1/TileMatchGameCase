@@ -7,6 +7,7 @@ namespace TileMatchGame.Controller
     public class ItemController : MonoBehaviour
     {
         [SerializeField] SpriteRenderer _spriteRenderer;
+        [SerializeField] SpriteRenderer _fruitSpriteRenderer;
         [SerializeField] Animator _animator;
         ItemManager _itemManager;
         Cell _cell;
@@ -53,10 +54,9 @@ namespace TileMatchGame.Controller
             transform.position = pos;
         }
 
-        public void ChangeSprite(int typeIndex)
+        public void ArrangeFruitSprite()
         {
-            //if (ItemType == ItemType.Booster) return;
-            _spriteRenderer.sprite = _itemManager.GetItemSprite(_itemType, typeIndex);
+            _fruitSpriteRenderer.sprite = _itemManager.GetItemSprite(_itemType);
         }
 
         public void Destroy()
@@ -75,7 +75,8 @@ namespace TileMatchGame.Controller
 
         public void ArrangeSorting()
         {
-            _spriteRenderer.sortingOrder = _cell.Tier;
+            _spriteRenderer.sortingOrder = _cell.Tier * 10;
+            _fruitSpriteRenderer.sortingOrder = _cell.Tier * 10 + 1;
         }
 
         public void ArrangeClickable(bool clickable)

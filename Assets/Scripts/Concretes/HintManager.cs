@@ -43,7 +43,7 @@ namespace TileMatchGame.Manager
 
                 item.ArrangeSorting();
 
-                item.ChangeSprite(item.TypeIndex);
+                item.ArrangeFruitSprite();
 
             }
         }        

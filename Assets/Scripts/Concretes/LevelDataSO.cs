@@ -23,7 +23,7 @@ namespace TileMatchGame.ScriptableObjects
         public List<Card> Cards => cards;
     }
 
-    [CreateAssetMenu(fileName = "LevenConfigSO", menuName = "CollapseBlast/LevelConfigSO", order = 0)]
+    [CreateAssetMenu(fileName = "LevenConfigSO", menuName = "TileMatchGame/LevelConfigSO", order = 0)]
     public class LevelDataSO : ScriptableObject
     {
         [SerializeField] int rows;

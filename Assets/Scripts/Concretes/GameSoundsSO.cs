@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TileMatchGame.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "GameSoundsSO", menuName = "CollapseBlast/GameSoundsSO", order = 4)]
+    [CreateAssetMenu(fileName = "GameSoundsSO", menuName = "TileMatchGame/GameSoundsSO", order = 4)]
     public class GameSoundsSO : ScriptableObject
     {
         [Header("Musics")]

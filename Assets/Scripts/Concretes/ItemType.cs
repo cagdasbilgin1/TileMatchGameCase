@@ -3,17 +3,10 @@
     public enum ItemType 
     {
         Apple,
-        Banana,
         Avocado,
-        Cherry,
-        Coconut,
-        Grape,
-        Kiwi,
-        Lemon,
-        Orange,
         Watermelon,
-        Strawberry,
-        Mango,
-        Pineapple
+        Pineapple,
+        Banana,
+        Strawberry
     }
 }

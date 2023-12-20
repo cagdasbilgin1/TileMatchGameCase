@@ -42,26 +42,9 @@ namespace TileMatchGame.Manager
             FallAnimData = new FallAnimData(_startVelocity, _acceleration, _maxVelocity);
         }
 
-        public Sprite GetItemSprite(ItemType itemType, int index)
+        public Sprite GetItemSprite(ItemType fruitItemType)
         {
-            switch (itemType)
-            {
-                case ItemType.Apple:
-                    return _itemTypesData.RedBoxes[index];
-                case ItemType.Orange:
-                    return _itemTypesData.GreenBoxes[index];
-                case ItemType.Strawberry:
-                    return _itemTypesData.BlueBoxes[index];
-                case ItemType.Avocado:
-                    return _itemTypesData.YellowBoxes[index];
-                case ItemType.Coconut:
-                    return _itemTypesData.PurpleBoxes[index];
-                case ItemType.Banana:
-                    return _itemTypesData.PinkBoxes[index];
-                case ItemType.Cherry:
-                    return _itemTypesData.Boosters[index];
-            }
-            return null;
+            return _itemTypesData.FruitSprites[(int)fruitItemType];
         }
 
         public ItemController CreateItem(ItemType itemType, Vector3 itemSpawnPos)
