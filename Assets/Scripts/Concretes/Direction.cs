@@ -1,4 +1,4 @@
-﻿namespace CollapseBlast.Enums
+﻿namespace TileMatchGame.Enums
 {
     public enum Direction
     {
@@ -11,4 +11,20 @@
         DownRight,
         DownLeft,
     }
+    //public enum CardType
+    //{
+    //    Apple,
+    //    Banana,
+    //    Avocado,
+    //    Cherry,
+    //    Coconut,
+    //    Grape,
+    //    Kiwi,
+    //    Lemon,
+    //    Orange,
+    //    Watermelon,
+    //    Strawberry,
+    //    Mango,
+    //    Pineapple
+    //}
 }

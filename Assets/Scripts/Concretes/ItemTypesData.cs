@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CollapseBlast.ScriptableObjects
+namespace TileMatchGame.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "ItemTypesData", menuName = "CollapseBlast/ItemTypesData", order = 1)]
     public class ItemTypesData : ScriptableObject

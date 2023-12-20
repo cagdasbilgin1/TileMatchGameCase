@@ -275,6 +275,7 @@ MonoBehaviour:
   _itemTypesData: {fileID: 11400000, guid: 758ef6ed59219a541a702441339c7942, type: 2}
   _boosterAnimations: {fileID: 0}
   _itemPrefab: {fileID: 7505205692469373977, guid: 26f8f46f235e6334690557ade4ea8688, type: 3}
+  _cardPrefab: {fileID: 7505205692469373977, guid: ad4849fb49a78af459dd409d086fa18e, type: 3}
 --- !u!114 &8767403435434524839
 MonoBehaviour:
   m_ObjectHideFlags: 0

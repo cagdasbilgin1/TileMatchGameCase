@@ -1,17 +1,18 @@
-using CollapseBlast.Controller;
-using CollapseBlast.Enums;
-using CollapseBlast.Manager;
+using TileMatchGame.Controller;
+using TileMatchGame.Enums;
+using TileMatchGame.Manager;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CollapseBlast
+namespace TileMatchGame
 {
 	public class Cell : MonoBehaviour
 	{
-        [HideInInspector] public int X;
-		[HideInInspector] public int Y;
-		[HideInInspector] public int Tier;
+        //[HideInInspector] public int X;
+		//[HideInInspector] public int Y;
+		[HideInInspector] public Vector2Int Position;
+        [HideInInspector] public int Tier;
         [HideInInspector] public Cell FallStopPosition;
 		[HideInInspector] public bool IsTopRowCell;
         
@@ -45,17 +46,16 @@ namespace CollapseBlast
 			}
 		}
 
-		public void Init(int x, int y, int tier)
+		public void Init()
 		{
-			X = x;
-			Y = y;
-			Tier = tier;
+			//X = x;
+			//Y = y;
 			var gameManager = GameManager.Instance;
 			var level = gameManager.Level;
-			IsTopRowCell = Y == level.Rows - 1;
+			//IsTopRowCell = Y == level.Rows - 1;
 			_distanceBetweenItems = level.DistanceBetweenItems;
 			_board = gameManager.Board;
-			transform.localPosition = new Vector3(x * _distanceBetweenItems, y * _distanceBetweenItems);
+			transform.localPosition = new Vector3(Position.x * _distanceBetweenItems, Position.y * _distanceBetweenItems);
             ArrangeCellName();
 			UpdateNeighbours();
 		}
@@ -89,7 +89,7 @@ namespace CollapseBlast
 
 		private void ArrangeCellName()
 		{
-			gameObject.name = $"Cell {X}:{Y} [{Tier}]";
+			gameObject.name = $"Cell {Position.x}:{Position.y} [{Tier}]";
 		}
 
 		public Cell GetFallTargetCell()

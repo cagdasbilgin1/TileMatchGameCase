@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using CollapseBlast.Enums;
-using CollapseBlast.Manager;
+using TileMatchGame.Enums;
+using TileMatchGame.Manager;
 
-namespace CollapseBlast.Controller
+namespace TileMatchGame.Controller
 {
     public class ItemController : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace CollapseBlast.Controller
         bool _isNotClickable;
 
         public ItemType ItemType => _itemType;
-        public bool IsBooster => _itemType == ItemType.Booster;
+        //public bool IsBooster => _itemType == ItemType.Booster;
         public bool IsNotClickable => _isNotClickable;
         public int TypeIndex { get { return _typeIndex; } set { _typeIndex = value; } }
         public bool IsHorizontalRocketBooster;
@@ -40,29 +40,17 @@ namespace CollapseBlast.Controller
                 if (value != null)
                 {
                     value.Item = this;
-                    gameObject.name = $"Item {_cell.X}:{_cell.Y}";
+                    gameObject.name = $"Item {_cell.Position.x}:{_cell.Position.y} [{_cell.Tier}]";
                 }
             }
         }
 
-        public void Init(ItemType itemType, Vector3 pos, int boosterTypeIndex)
+        public void Init(ItemType itemType, Vector3 pos)
         {
             _itemType = itemType;
             _itemManager = GameManager.Instance.ItemManager;
-            _fallAnimation = new FallAnimation(_itemManager.FallAnimData, this);
-            transform.localPosition = pos;
-
-            if(itemType == ItemType.Booster)
-            {
-                _typeIndex = boosterTypeIndex;
-                ChangeSprite(_typeIndex);
-
-                if (boosterTypeIndex == 0 && Random.value < 0.5f) // if booster rocket 50% chance horizontally or vertically
-                {
-                    transform.Rotate(0f, 0f, 90f, Space.Self);
-                    IsHorizontalRocketBooster = true;
-                }
-            }
+            //_fallAnimation = new FallAnimation(_itemManager.FallAnimData, this);
+            transform.position = pos;
         }
 
         public void ChangeSprite(int typeIndex)
@@ -87,7 +75,7 @@ namespace CollapseBlast.Controller
 
         public void ArrangeSorting()
         {
-            _spriteRenderer.sortingOrder = _cell.Y;
+            _spriteRenderer.sortingOrder = _cell.Tier;
         }
 
         public void ArrangeClickable(bool clickable)
@@ -97,7 +85,7 @@ namespace CollapseBlast.Controller
 
         private void Update()
         {
-            _fallAnimation.TickUpdate();
+            //_fallAnimation.TickUpdate();
         }
     }
 }

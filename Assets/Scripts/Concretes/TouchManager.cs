@@ -1,7 +1,7 @@
-﻿using CollapseBlast.Manager;
+﻿using TileMatchGame.Manager;
 using UnityEngine;
 
-namespace CollapseBlast.Utilities
+namespace TileMatchGame.Utilities
 {
 	public class TouchManager : MonoBehaviour
 	{

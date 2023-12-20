@@ -1,9 +1,9 @@
-using CollapseBlast.Enums;
+using TileMatchGame.Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CollapseBlast.ScriptableObjects
+namespace TileMatchGame.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "BoosterAnimations", menuName = "CollapseBlast/BoosterAnimationsSO", order = 2)]
     public class BoosterAnimationSO : ScriptableObject

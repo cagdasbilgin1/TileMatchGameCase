@@ -1,7 +1,7 @@
-using CollapseBlast.Canvas;
+using TileMatchGame.Canvas;
 using UnityEngine;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class CanvasManager : MonoBehaviour
     {

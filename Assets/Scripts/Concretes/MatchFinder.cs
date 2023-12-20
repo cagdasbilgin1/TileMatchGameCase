@@ -1,8 +1,8 @@
-﻿using CollapseBlast.Enums;
-using CollapseBlast.Manager;
+﻿using TileMatchGame.Enums;
+using TileMatchGame.Manager;
 using System.Collections.Generic;
 
-namespace CollapseBlast
+namespace TileMatchGame
 {
 	public class MatchFinder
 	{
@@ -35,8 +35,8 @@ namespace CollapseBlast
 		{
 			if (cell == null) return;
 			
-			var x = cell.X;
-			var y = cell.Y;
+			var x = cell.Position.x;
+			var y = cell.Position.y;
 			if (_visitedCells[x, y]) return;
 			
 			_visitedCells[x, y] = true;

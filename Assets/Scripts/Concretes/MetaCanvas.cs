@@ -1,10 +1,10 @@
-using CollapseBlast.Manager;
+using TileMatchGame.Manager;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace CollapseBlast.Canvas
+namespace TileMatchGame.Canvas
 {
     public class MetaCanvas : MonoBehaviour
     {

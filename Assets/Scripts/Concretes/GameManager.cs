@@ -1,10 +1,10 @@
-using CollapseBlast.Abstracts;
-using CollapseBlast.Utilities;
+using TileMatchGame.Abstracts;
+using TileMatchGame.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class GameManager : SingletonMonoBehaviour<GameManager>
     {
@@ -46,16 +46,17 @@ namespace CollapseBlast.Manager
         {
             Level.Init();
             Board.Init();
-            //ItemManager.Init();
+            ItemManager.Init();
             HintManager.Init();
             FallManager.Init();
-            Level.FillBoard();
+            //Level.FillBoard();
+            //Board.FillBoard();
         }
 
         private void Update()
         {
-            //FallManager.TickUpdate();
-            //HintManager.TickUpdate();
+            FallManager.TickUpdate();
+            HintManager.TickUpdate();
         }
 
         public void EnableInput()

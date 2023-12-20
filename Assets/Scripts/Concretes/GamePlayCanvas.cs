@@ -1,10 +1,10 @@
-using CollapseBlast.Manager;
-using CollapseBlast.ScriptableObjects;
+using TileMatchGame.Manager;
+using TileMatchGame.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CollapseBlast.Canvas
+namespace TileMatchGame.Canvas
 {
     public class GamePlayCanvas : MonoBehaviour
     {
@@ -35,7 +35,7 @@ namespace CollapseBlast.Canvas
         {
             _levelGoalCounterText.text = _levelData.GoalCount.ToString();
             _levelMovesCounterText.text = _levelData.MovesCount.ToString();
-            _levelGoalItemTypeImage.sprite = _itemManager.GetItemSprite(_levelData.GoalItemType, 0);
+            //_levelGoalItemTypeImage.sprite = _itemManager.GetItemSprite(_levelData.GoalItemType, 0);
         }
 
         public void UpdateLevelData()

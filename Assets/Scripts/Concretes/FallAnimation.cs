@@ -1,8 +1,8 @@
-﻿using CollapseBlast.Controller;
-using CollapseBlast.Manager;
+﻿using TileMatchGame.Controller;
+using TileMatchGame.Manager;
 using UnityEngine;
 
-namespace CollapseBlast
+namespace TileMatchGame
 {
 	public class FallAnimation
 	{        
@@ -26,7 +26,7 @@ namespace CollapseBlast
 
         public void FallTo(Cell targetCell)
 		{
-			if (_targetCell != null && targetCell.Y >= _targetCell.Y) return;
+			if (_targetCell != null && targetCell.Position.y >= _targetCell.Position.y) return;
 			_targetCell = targetCell;
 			_item.Cell = targetCell;
 			_targetPosition = targetCell.transform.position;

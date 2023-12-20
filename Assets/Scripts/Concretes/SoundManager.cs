@@ -1,5 +1,5 @@
-using CollapseBlast.Manager;
-using CollapseBlast.ScriptableObjects;
+using TileMatchGame.Manager;
+using TileMatchGame.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Audio;
 

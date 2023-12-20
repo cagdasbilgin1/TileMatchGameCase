@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CollapseBlast.ScriptableObjects
+namespace TileMatchGame.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "GameSoundsSO", menuName = "CollapseBlast/GameSoundsSO", order = 4)]
     public class GameSoundsSO : ScriptableObject

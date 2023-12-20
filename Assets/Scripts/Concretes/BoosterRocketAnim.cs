@@ -1,11 +1,11 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
-using CollapseBlast.Enums;
-using CollapseBlast.Manager;
-using CollapseBlast.Abstracts;
+using TileMatchGame.Enums;
+using TileMatchGame.Manager;
+using TileMatchGame.Abstracts;
 
-namespace CollapseBlast.Controller
+namespace TileMatchGame.Controller
 {
     public class BoosterRocketAnim : MonoBehaviour, IBoosterAnim
     {
@@ -32,12 +32,12 @@ namespace CollapseBlast.Controller
 
         public void ExecuteAnim(Cell boosterCell, LevelManager level)
         {
-            _level = level;
-            var goalItemType = _level.CurrentLevelData.GoalItemType;
-            FindCells(boosterCell, out _isHorizontal);
-            DestroyCellItems(goalItemType);
-            UpdateGoalChart(goalItemType);
-            PlayRocketAnim(_isHorizontal);
+            //_level = level;
+            //var goalItemType = _level.CurrentLevelData.GoalItemType;
+            //FindCells(boosterCell, out _isHorizontal);
+            //DestroyCellItems(goalItemType);
+            //UpdateGoalChart(goalItemType);
+            //PlayRocketAnim(_isHorizontal);
         }
 
         void Update()

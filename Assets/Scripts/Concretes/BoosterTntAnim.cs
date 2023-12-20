@@ -1,11 +1,11 @@
-using CollapseBlast.Abstracts;
-using CollapseBlast.Enums;
-using CollapseBlast.Manager;
+using TileMatchGame.Abstracts;
+using TileMatchGame.Enums;
+using TileMatchGame.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CollapseBlast.Controller
+namespace TileMatchGame.Controller
 {
     public class BoosterTntAnim : MonoBehaviour, IBoosterAnim
     {
@@ -22,12 +22,12 @@ namespace CollapseBlast.Controller
 
         public void ExecuteAnim(Cell boosterCell, LevelManager level)
         {
-            _level = level;
-            var goalItemType = _level.CurrentLevelData.GoalItemType;
-            FindCells(boosterCell);
-            DestroyCellItems(goalItemType);
-            UpdateGoalChart(goalItemType);
-            StartCoroutine(DestroyAnimOnFinish());
+            //_level = level;
+            //var goalItemType = _level.CurrentLevelData.GoalItemType;
+            //FindCells(boosterCell);
+            //DestroyCellItems(goalItemType);
+            //UpdateGoalChart(goalItemType);
+            //StartCoroutine(DestroyAnimOnFinish());
         }
 
         void FindCells(Cell boosterCell)

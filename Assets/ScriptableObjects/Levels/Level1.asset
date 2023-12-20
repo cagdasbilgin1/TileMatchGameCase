@@ -17,19 +17,23 @@ MonoBehaviour:
   distanceBetweenItems: 0.1
   usableScreenWidthRatio: 0.8
   usableScreenHeightRatio: 0.6
-  colors: 030000000500000002000000
-  firstSpecialIconTypeThreshold: 3
-  secondSpecialIconTypeThreshold: 5
-  thirdSpecialIconTypeThreshold: 7
-  levelJson: {fileID: 4900000, guid: 63585e0924d1bb044bb8f3058147ac1d, type: 3}
   minimumBlastableMatch: 2
-  goalItemType: 5
   goalCount: 25
   movesCount: 15
   tierCount: 1
   tierList:
   - cards:
-    - position: {x: 0, y: 0}
-      cardType: 0
-    - position: {x: 0, y: 0}
-      cardType: 0
+    - position: {x: 15, y: 15}
+      itemType: 0
+    - position: {x: 26, y: 26}
+      itemType: 4
+  - cards:
+    - position: {x: 17, y: 33}
+      itemType: 1
+    - position: {x: 26, y: 30}
+      itemType: 2
+  - cards:
+    - position: {x: 16, y: 22}
+      itemType: 2
+    - position: {x: 11, y: 33}
+      itemType: 1

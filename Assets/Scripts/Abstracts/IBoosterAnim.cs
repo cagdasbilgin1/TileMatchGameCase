@@ -1,6 +1,6 @@
-using CollapseBlast.Manager;
+using TileMatchGame.Manager;
 
-namespace CollapseBlast.Abstracts
+namespace TileMatchGame.Abstracts
 {
     public interface IBoosterAnim
     {

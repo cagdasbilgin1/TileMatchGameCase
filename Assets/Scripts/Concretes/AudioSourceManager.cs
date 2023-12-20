@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class AudioSourceManager : MonoBehaviour
     {

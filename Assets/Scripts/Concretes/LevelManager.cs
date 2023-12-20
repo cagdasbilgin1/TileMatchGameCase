@@ -1,11 +1,11 @@
-﻿using CollapseBlast.Enums;
-using CollapseBlast.ScriptableObjects;
+﻿using TileMatchGame.Enums;
+using TileMatchGame.ScriptableObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class LevelManager : MonoBehaviour
     {
@@ -24,9 +24,9 @@ namespace CollapseBlast.Manager
         int _moveCount;
         LevelDataSO _currentLevelData;
         Board _board;
-        //ItemManager _itemManager;
+        ItemManager _itemManager;
         List<ItemType> _itemTypes;
-        List<LevelItem> levelItemDatas;        
+        List<LevelItem> levelItemDatas;
 
         public int GoalCount => _goalCount;
         public int MoveCount => _moveCount;
@@ -35,7 +35,6 @@ namespace CollapseBlast.Manager
         public float DistanceBetweenItems => _distanceBetweenItems;
         public float UsableScreenWidthRatio => _usableScreenWidthRatio;
         public float UsableScreenHeightRatio => _usableScreenHeightRatio;
-        public int TierCount => _tierCount;
         public List<TierData> TierList => _tierList;
         public int LevelIndex => _levelIndex;
         public int MinimumBlastableMatch => _minimumBlastableMatch;
@@ -51,19 +50,15 @@ namespace CollapseBlast.Manager
 
             var gameManager = GameManager.Instance;
             _board = gameManager.Board;
-            //_itemManager = gameManager.ItemManager;
+            _itemManager = gameManager.ItemManager;
             _currentLevelData = levels[_levelIndex];
             _rows = _currentLevelData.Rows;
             _columns = _currentLevelData.Columns;
             _distanceBetweenItems = _currentLevelData.DistanceBetweenItems;
             _usableScreenWidthRatio = _currentLevelData.UsableScreenWidthRatio;
             _usableScreenHeightRatio = _currentLevelData.UsableScreenHeightRatio;
-            _tierCount = _currentLevelData.TierCount;
             _tierList = _currentLevelData.TierList;
             _minimumBlastableMatch = _currentLevelData.MinimumBlastableCell;
-            _itemTypes = _currentLevelData.ItemTypes;
-
-            LoadJsonDatas();
 
             gameManager.metaSceneOpenedEvent += ResetLevel;
 
@@ -91,53 +86,29 @@ namespace CollapseBlast.Manager
             _moveCount = _currentLevelData.MovesCount;
 
             _board.ClearItems();
-            FillBoard();
+            _board.FillBoard();
         }
 
         public void UpdateLevelStats(ItemType blastedItemsType, int blastedItemCount)
         {
             _moveCount--;
-            if (_currentLevelData.GoalItemType == blastedItemsType)
-            {
-                _goalCount -= blastedItemCount;
-            }
+            //if (_currentLevelData.GoalItemType == blastedItemsType)
+            //{
+            //    _goalCount -= blastedItemCount;
+            //}
 
             if (_goalCount <= 0)
             {
                 _goalCount = 0;
                 LevelUp();
-            }else if (_moveCount <= 0)
+            }
+            else if (_moveCount <= 0)
             {
                 _moveCount = 0;
                 GameOver();
             }
 
             OnLevelStatsUpdateEvent?.Invoke();
-        }
-
-        void LoadJsonDatas()
-        {
-            levelItemDatas = new List<LevelItem>();
-            if (_currentLevelData.LevelJson != null)
-            {
-                var levelDataJson = JsonUtility.FromJson<LevelDataJson>(_currentLevelData.LevelJson.text);
-                levelItemDatas = levelDataJson?.levelItems;
-            }
-        }
-
-        public void FillBoard()
-        {
-            //var i = 0;
-            //for (var y = 0; y < _rows; y++)
-            //{
-            //    for (var x = 0; x < _columns; x++)
-            //    {
-            //        var itemType = DefineItemType(i);
-            //        var cell = _board.Cells[i];
-            //        cell.Item = _itemManager.CreateItem(itemType, cell.transform.localPosition);
-            //        i++;
-            //    }
-            //}
         }
 
         ItemType DefineItemType(int i)

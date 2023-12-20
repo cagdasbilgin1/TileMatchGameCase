@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using CollapseBlast.Enums;
-using CollapseBlast.ScriptableObjects;
-using CollapseBlast.Controller;
-using CollapseBlast.Abstracts;
+using TileMatchGame.Enums;
+using TileMatchGame.ScriptableObjects;
+using TileMatchGame.Controller;
+using TileMatchGame.Abstracts;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class FallAnimData
     {
@@ -27,7 +27,7 @@ namespace CollapseBlast.Manager
         [SerializeField] ItemTypesData _itemTypesData;
         [SerializeField] BoosterAnimationSO _boosterAnimations;
         [SerializeField] ItemController _itemPrefab;
-        Transform _itemsParent;
+        //Transform _itemsParent;
         Transform _particlesAnimationsParent;
         LevelManager _levelManager;
 
@@ -36,7 +36,7 @@ namespace CollapseBlast.Manager
         public void Init()
         {
             var gameManager = GameManager.Instance;
-            _itemsParent = gameManager.Board.ItemsParent;
+            //_itemsParent = gameManager.Board.ItemsParent;
             _particlesAnimationsParent = gameManager.Board.ParticlesAnimationsParent;
             _levelManager = gameManager.Level;
             FallAnimData = new FallAnimData(_startVelocity, _acceleration, _maxVelocity);
@@ -46,38 +46,38 @@ namespace CollapseBlast.Manager
         {
             switch (itemType)
             {
-                case ItemType.RedBox:
+                case ItemType.Apple:
                     return _itemTypesData.RedBoxes[index];
-                case ItemType.GreenBox:
+                case ItemType.Orange:
                     return _itemTypesData.GreenBoxes[index];
-                case ItemType.BlueBox:
+                case ItemType.Strawberry:
                     return _itemTypesData.BlueBoxes[index];
-                case ItemType.YellowBox:
+                case ItemType.Avocado:
                     return _itemTypesData.YellowBoxes[index];
-                case ItemType.PurpleBox:
+                case ItemType.Coconut:
                     return _itemTypesData.PurpleBoxes[index];
-                case ItemType.PinkBox:
+                case ItemType.Banana:
                     return _itemTypesData.PinkBoxes[index];
-                case ItemType.Booster:
+                case ItemType.Cherry:
                     return _itemTypesData.Boosters[index];
             }
             return null;
         }
 
-        public ItemController CreateItem(ItemType itemType, Vector3 itemSpawnPos, int boosterTypeIndex = 0)
+        public ItemController CreateItem(ItemType itemType, Vector3 itemSpawnPos)
         {
-            var item = Instantiate(_itemPrefab, Vector3.zero, Quaternion.identity, _itemsParent).GetComponent<ItemController>();
-            item.Init(itemType, itemSpawnPos, boosterTypeIndex);
+            var item = Instantiate(_itemPrefab, Vector3.zero, Quaternion.identity).GetComponent<ItemController>();
+            item.Init(itemType, itemSpawnPos);
             return item;
         }
 
-        public void ExecuteBooster(int boosterIndex, Cell boosterCell)
-        {
-            var booster = Instantiate(_boosterAnimations.BoosterAnimations[boosterIndex], boosterCell.transform.position, Quaternion.identity, _particlesAnimationsParent).GetComponent<IBoosterAnim>();
+        //public void ExecuteBooster(int boosterIndex, Cell boosterCell)
+        //{
+        //    var booster = Instantiate(_boosterAnimations.BoosterAnimations[boosterIndex], boosterCell.transform.position, Quaternion.identity, _particlesAnimationsParent).GetComponent<IBoosterAnim>();
 
-            booster.ExecuteSound();
-            booster.ExecuteAnim(boosterCell, _levelManager);
-        }
+        //    booster.ExecuteSound();
+        //    booster.ExecuteAnim(boosterCell, _levelManager);
+        //}
     }
 }
 

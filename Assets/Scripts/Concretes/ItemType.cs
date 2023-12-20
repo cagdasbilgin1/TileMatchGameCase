@@ -1,13 +1,19 @@
-﻿namespace CollapseBlast.Enums
+﻿namespace TileMatchGame.Enums
 {
     public enum ItemType 
     {
-        RedBox,
-        GreenBox,
-        BlueBox,
-        YellowBox,
-        PurpleBox,
-        PinkBox,        
-        Booster
+        Apple,
+        Banana,
+        Avocado,
+        Cherry,
+        Coconut,
+        Grape,
+        Kiwi,
+        Lemon,
+        Orange,
+        Watermelon,
+        Strawberry,
+        Mango,
+        Pineapple
     }
 }

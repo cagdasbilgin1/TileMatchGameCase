@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CollapseBlast.Abstracts
+namespace TileMatchGame.Abstracts
 {
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using CollapseBlast.Enums;
-using CollapseBlast.ScriptableObjects;
+using TileMatchGame.Enums;
+using TileMatchGame.ScriptableObjects;
 using UnityEngine;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class HintManager
     {
@@ -30,73 +30,23 @@ namespace CollapseBlast.Manager
             int cols = _columns;
             var cells = _board.Cells;
 
-            var matchedCellInfo = GetMatchedCellInfos();
+            //var matchedCellInfo = GetMatchedCellInfos();
 
-            var i = 0;
-            for (int y = 0; y < rows; y++)
+
+            foreach ( var cell in cells )
             {
-                for (int x = 0; x < cols; x++)
-                {
-                    var item = cells[i].Item;
-                    i++;
+                var item = cell.Item;
+                var x = cell.Position.x;
+                var y = cell.Position.y;
 
-                    if (item == null || item.ItemType == ItemType.Booster) continue;
+                if (item == null) continue;
 
-                    item.ArrangeSorting();
+                item.ArrangeSorting();
 
-                    if (matchedCellInfo[x, y] >= _currentLevelData.ThirdSpecialIconTypeThreshold)
-                    {
-                        item.TypeIndex = 3;
-                    }
-                    else if (matchedCellInfo[x, y] >= _currentLevelData.SecondSpecialIconTypeThreshold)
-                    {
-                        item.TypeIndex = 2;
-                    }
-                    else if (matchedCellInfo[x, y] >= _currentLevelData.FirstSpecialIconTypeThreshold)
-                    {
-                        item.TypeIndex = 1;
-                    }
-                    else
-                    {
-                        item.TypeIndex = 0;
-                    }
+                item.ChangeSprite(item.TypeIndex);
 
-                    item.ChangeSprite(item.TypeIndex);
-                }
             }
-        }
-
-        private int[,] GetMatchedCellInfos()
-        {
-            int rows = _rows;
-            int cols = _columns;
-            var cells = _board.Cells;
-
-            var i = 0;
-            int[,] matchedCellInfos = new int[cols, rows];
-            for (i = 0; i < cols * rows; i++)
-            {
-                matchedCellInfos[i % cols, i / cols] = -1; // set all matchedCellInfos elements to -1
-            }
-
-            i = 0;
-            var matchFinder = new MatchFinder();
-            for (int y = 0; y < rows; y++)
-            {
-                for (int x = 0; x < cols; x++)
-                {
-                    var cell = cells[i];
-                    if (matchedCellInfos[x, y] == -1 && cell.Item != null)
-                    {
-                        var partOfMatchedCells = matchFinder.FindMatch(cell, cell.Item.ItemType);
-                        //FillMatchedCellInfos(partOfMatchedCells, matchedCellInfos);
-                    }
-                    i++;
-                }
-            }
-
-            return matchedCellInfos;
-        }
+        }        
 
         private void FillMatchedCellInfos(List<Cell> partOfMatchedCells, int[,] matchedCellInfos)
         {
@@ -104,7 +54,7 @@ namespace CollapseBlast.Manager
             var size = partOfMatchedCells.Count;
             foreach (var cell in partOfMatchedCells)
             {
-                matchedCellInfos[cell.X, cell.Y] = size;
+                matchedCellInfos[cell.Position.x, cell.Position.y] = size;
             }
         }
     }

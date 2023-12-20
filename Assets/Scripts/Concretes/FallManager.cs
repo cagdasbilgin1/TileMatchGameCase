@@ -1,9 +1,9 @@
-﻿using CollapseBlast.Enums;
+﻿using TileMatchGame.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace CollapseBlast.Manager
+namespace TileMatchGame.Manager
 {
     public class FallManager
     {
@@ -20,13 +20,13 @@ namespace CollapseBlast.Manager
             _board = gameManager.Board;
             _rows = gameManager.Level.Rows;
             _columns = gameManager.Level.Columns;
-            _itemTypes = gameManager.Level.CurrentLevelData.ItemTypes;
+            //_itemTypes = gameManager.Level.CurrentLevelData.ItemTypes;
             FindTopRowCells();
         }
 
         void FindTopRowCells()
         {
-            _topRowCells = _board.Cells.Where(cell => cell.Y == GameManager.Instance.Level.Rows - 1).ToList();
+            _topRowCells = _board.Cells.Where(cell => cell.Position.y == GameManager.Instance.Level.Rows - 1).ToList();
         }
 
         private void FallExistentItems()
@@ -58,16 +58,16 @@ namespace CollapseBlast.Manager
                     var offsetY = fallStopPosition != null ? fallStopPosition.Item.transform.localPosition.y + 1 : 0f;
                     var fallStartPosition = cell.transform.localPosition + Vector3.up;
                     fallStartPosition.y = Mathf.Max(fallStartPosition.y, offsetY);
-                    cell.Item = _itemManager.CreateItem(rndItemType, fallStartPosition);
-                    cell.Item.Fall();
+                    //cell.Item = _itemManager.CreateItem(rndItemType, fallStartPosition);
+                    //cell.Item.Fall();
                 }
             }
         }
 
         public void TickUpdate()
         {
-            FallExistentItems();
-            FallNonExistentItems();
+            //FallExistentItems();
+            //FallNonExistentItems();
         }
     }
 }
