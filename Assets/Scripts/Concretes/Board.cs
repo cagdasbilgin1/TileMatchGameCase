@@ -7,12 +7,14 @@ using TileMatchGame.Controller;
 using TileMatchGame.ScriptableObjects;
 using UnityEditor.Rendering.LookDev;
 using System.Collections;
+using TMPro;
+using DG.Tweening;
 
 namespace TileMatchGame
 {
     public class Board : MonoBehaviour
     {
-        public GameObject MatchAreaPrefab;
+        public MatchAreaManager MatchAreaPrefab;
         public Cell CellPrefab;
         public Transform CellsParent;
         public Transform ItemsParent;
@@ -28,6 +30,7 @@ namespace TileMatchGame
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
         List<TierData> _tierList;
+        MatchAreaManager _matchArea;
         [SerializeField] float TopAreaRatio;
         [SerializeField] float MiddleAreaRatio;
         [SerializeField] float BottomAreaRatio;
@@ -94,10 +97,10 @@ namespace TileMatchGame
 
         void InitMatchArea()
         {
-            var matchArea = Instantiate(MatchAreaPrefab, Vector3.zero, Quaternion.identity, transform);
-            matchArea.GetComponent<SpriteRenderer>().size = new Vector2(6, 1);
-            matchArea.transform.parent = GameManager.Instance.transform;
-            matchArea.transform.position = GetScreenSectionWorldPosition(1);
+            _matchArea = Instantiate(MatchAreaPrefab, Vector3.zero, Quaternion.identity, transform);
+            _matchArea.transform.SetParent(GameManager.Instance.transform);
+            _matchArea.transform.position = GetScreenSectionWorldPosition(1);
+            _matchArea.Init(6);
         }
 
         private void CreateCellDummy()
@@ -175,20 +178,22 @@ namespace TileMatchGame
             if (cell == null || cell.Item == null || cell.Item.IsNotClickable) return;
 
             var tappedItem = cell.Item;
-            //var tappedCellIsBooster = tappedItem.IsBooster;
-            var tappedCellTypeIndex = tappedItem.TypeIndex;
-            DestroyMatchedItems(cell);
 
-            //if (!tappedCellIsBooster && tappedCellTypeIndex > 0) //create booster
-            //{
-            //    cell.Item = GameManager.Instance.ItemManager.CreateItem(ItemType.Booster, cell.transform.localPosition, tappedCellTypeIndex - 1);
-            //}
-            //else if (tappedCellIsBooster)
-            //{
-            //    var boosterIndex = tappedItem.TypeIndex;
+            var startPos = tappedItem.transform.position;
+            var endPos = _matchArea.GetFirstEmptyAreaPosition();
 
-            //    _itemManager.ExecuteBooster(boosterIndex, cell);
-            //}
+            var moveSpeed = 10f;
+            var distance = Vector3.Distance(startPos, endPos);
+            float duration = distance / moveSpeed;
+
+            tappedItem.transform.DOMove(endPos, duration).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                _matchArea.FillFirstEmptyArea(tappedItem);
+            });
+
+
+
+            //var tappedCellTypeIndex = tappedItem.TypeIndex;
         }
 
         private void DestroyMatchedItems(Cell cell)
