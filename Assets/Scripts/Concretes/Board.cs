@@ -6,11 +6,13 @@ using TileMatchGame.Manager;
 using TileMatchGame.Controller;
 using TileMatchGame.ScriptableObjects;
 using UnityEditor.Rendering.LookDev;
+using System.Collections;
 
 namespace TileMatchGame
 {
     public class Board : MonoBehaviour
     {
+        public GameObject MatchAreaPrefab;
         public Cell CellPrefab;
         public Transform CellsParent;
         public Transform ItemsParent;
@@ -26,6 +28,9 @@ namespace TileMatchGame
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
         List<TierData> _tierList;
+        [SerializeField] float TopAreaRatio;
+        [SerializeField] float MiddleAreaRatio;
+        [SerializeField] float BottomAreaRatio;
 
         public void Init()
         {
@@ -49,6 +54,9 @@ namespace TileMatchGame
 
             ArrangeBoardPosition();
             ArrangeBoardScale();
+            InitMatchArea();
+
+            //GetScreenSectionMiddleWorldPosition();
         }
 
         void ArrangeBoardPosition()
@@ -58,14 +66,8 @@ namespace TileMatchGame
             var yPos = _distanceBetweenItems * (_rows / -2f) + (_distanceBetweenItems / 2);
             transform.localPosition = new Vector2(xPos, yPos);
 
-            //board moved to the top of the screen
-            var mainCamera = Camera.main;
-            var boardHeight = _distanceBetweenItems * _rows;
-            var screenTop = new Vector3(Screen.width / 2f, Screen.height, 0);
-            var worldTop = mainCamera.ScreenToWorldPoint(screenTop);
-            float maxY = mainCamera.ViewportToWorldPoint(Vector3.up).y - (boardHeight / 2f);
-            worldTop.y = Mathf.Min(worldTop.y, maxY);
-            transform.Translate(new Vector2(0, worldTop.y / 2));
+            //board parent placed at the specified point
+            transform.parent.position = GetScreenSectionWorldPosition(2); // 2 means middle area
         }
 
         void ArrangeBoardScale()
@@ -88,6 +90,14 @@ namespace TileMatchGame
                 boardHeight -= (boardHeight * .05f);
                 boardWidth -= (boardWidth * .05f);
             }
+        }
+
+        void InitMatchArea()
+        {
+            var matchArea = Instantiate(MatchAreaPrefab, Vector3.zero, Quaternion.identity, transform);
+            matchArea.GetComponent<SpriteRenderer>().size = new Vector2(6, 1);
+            matchArea.transform.parent = GameManager.Instance.transform;
+            matchArea.transform.position = GetScreenSectionWorldPosition(1);
         }
 
         private void CreateCellDummy()
@@ -286,6 +296,29 @@ namespace TileMatchGame
                     }
                 }
                 tierIndex++;
+            }
+        }
+
+        Vector2 GetScreenSectionWorldPosition(int areaIndex)
+        {
+            var camera = Camera.main;
+            float screenHeight = Screen.height;
+
+            float topHeight = screenHeight * BottomAreaRatio;
+            float middleHeight = screenHeight * MiddleAreaRatio;
+            float bottomHeight = screenHeight * TopAreaRatio;
+
+            float topPosition = topHeight / 2f;
+            float middlePosition = topHeight + middleHeight / 2f;
+            float bottomPosition = topHeight + middleHeight + bottomHeight / 2f;
+
+            //calculate world positions
+            switch (areaIndex)
+            {
+                case 1: return camera.ScreenToWorldPoint(new Vector2(Screen.width / 2f, topPosition));
+                case 2: return camera.ScreenToWorldPoint(new Vector2(Screen.width / 2f, middlePosition));
+                case 3: return camera.ScreenToWorldPoint(new Vector2(Screen.width / 2f, bottomPosition));
+                default: return Vector2.zero;
             }
         }
     }

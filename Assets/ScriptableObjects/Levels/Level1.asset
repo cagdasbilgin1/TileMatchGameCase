@@ -14,26 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 60
   columns: 40
-  distanceBetweenItems: 0.1
+  distanceBetweenItems: 0.15
   usableScreenWidthRatio: 0.8
   usableScreenHeightRatio: 0.6
   minimumBlastableMatch: 2
   goalCount: 25
   movesCount: 15
-  tierCount: 1
   tierList:
   - cards:
-    - position: {x: 15, y: 15}
+    - position: {x: 10, y: 40}
       itemType: 0
-    - position: {x: 26, y: 26}
-      itemType: 4
-  - cards:
-    - position: {x: 17, y: 33}
-      itemType: 1
-    - position: {x: 26, y: 30}
+    - position: {x: 20, y: 40}
+      itemType: 0
+    - position: {x: 30, y: 40}
+      itemType: 0
+    - position: {x: 10, y: 20}
       itemType: 2
-  - cards:
-    - position: {x: 16, y: 22}
+    - position: {x: 20, y: 20}
       itemType: 2
-    - position: {x: 11, y: 33}
-      itemType: 1
+    - position: {x: 30, y: 20}
+      itemType: 2

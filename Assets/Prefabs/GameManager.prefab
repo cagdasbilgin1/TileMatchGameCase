@@ -109,12 +109,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cee55a72e6e4834db10aa9ad4d23b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MatchAreaPrefab: {fileID: 4331656309207618292, guid: 1f353831b9029114990d610495f9a398, type: 3}
   CellPrefab: {fileID: 4060775372955265900, guid: f17a161c1670044f9b71079e5003a477, type: 3}
   CellsParent: {fileID: 2546654285448441808}
   ItemsParent: {fileID: 2546654285268759037}
   ParticlesAnimationsParent: {fileID: 5995400758940089987}
   BoardMask: {fileID: 0}
   Cells: []
+  TopAreaRatio: 0.2
+  MiddleAreaRatio: 0.3
+  BottomAreaRatio: 0.5
 --- !u!1 &2546654285448441811
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +279,6 @@ MonoBehaviour:
   _itemTypesData: {fileID: 11400000, guid: 758ef6ed59219a541a702441339c7942, type: 2}
   _boosterAnimations: {fileID: 0}
   _itemPrefab: {fileID: 7505205692469373977, guid: 26f8f46f235e6334690557ade4ea8688, type: 3}
-  _cardPrefab: {fileID: 7505205692469373977, guid: ad4849fb49a78af459dd409d086fa18e, type: 3}
 --- !u!114 &8767403435434524839
 MonoBehaviour:
   m_ObjectHideFlags: 0

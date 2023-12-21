@@ -34,7 +34,6 @@ namespace TileMatchGame.ScriptableObjects
         [SerializeField] int minimumBlastableMatch;
         [SerializeField] int goalCount;
         [SerializeField] int movesCount;
-        [SerializeField] int tierCount;
         [SerializeField] List<TierData> tierList = new List<TierData>();
 
         public int Rows => rows;
