@@ -23,14 +23,14 @@ MonoBehaviour:
   tierList:
   - cards:
     - position: {x: 10, y: 40}
-      itemType: 0
+      itemType: 1
     - position: {x: 20, y: 40}
-      itemType: 0
+      itemType: 1
     - position: {x: 30, y: 40}
-      itemType: 0
+      itemType: 1
     - position: {x: 10, y: 20}
-      itemType: 2
+      itemType: 3
     - position: {x: 20, y: 20}
-      itemType: 2
+      itemType: 3
     - position: {x: 30, y: 20}
-      itemType: 2
+      itemType: 3

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ItemTypesData
   m_EditorClassIdentifier: 
   fruitSprites:
+  - {fileID: 0}
   - {fileID: 21300000, guid: 16a18f6087b69074b854835abb2822fc, type: 3}
   - {fileID: 21300000, guid: f4bd083b4182fcc48962ba429ffab18c, type: 3}
   - {fileID: 21300000, guid: 4c0ae3be3a1b59b4da4514d431020c43, type: 3}

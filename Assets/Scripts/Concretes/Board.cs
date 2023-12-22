@@ -30,7 +30,7 @@ namespace TileMatchGame
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
         List<TierData> _tierList;
-        MatchAreaManager _matchArea;
+        MatchAreaManager _matchAreaManager;
         [SerializeField] float TopAreaRatio;
         [SerializeField] float MiddleAreaRatio;
         [SerializeField] float BottomAreaRatio;
@@ -97,10 +97,10 @@ namespace TileMatchGame
 
         void InitMatchArea()
         {
-            _matchArea = Instantiate(MatchAreaPrefab, Vector3.zero, Quaternion.identity, transform);
-            _matchArea.transform.SetParent(GameManager.Instance.transform);
-            _matchArea.transform.position = GetScreenSectionWorldPosition(1);
-            _matchArea.Init(6);
+            _matchAreaManager = Instantiate(MatchAreaPrefab, Vector3.zero, Quaternion.identity, transform);
+            _matchAreaManager.transform.SetParent(GameManager.Instance.transform);
+            _matchAreaManager.transform.position = GetScreenSectionWorldPosition(1);
+            _matchAreaManager.Init(6);
         }
 
         private void CreateCellDummy()
@@ -178,22 +178,33 @@ namespace TileMatchGame
             if (cell == null || cell.Item == null || cell.Item.IsNotClickable) return;
 
             var tappedItem = cell.Item;
+            cell.Item = null;
 
             var startPos = tappedItem.transform.position;
-            var endPos = _matchArea.GetFirstEmptyAreaPosition();
+            var indexOfEndPosArea = _matchAreaManager.GetIndexOfAreaNeedToGo(tappedItem.ItemType);
+            
+
+            var endArea = _matchAreaManager.GetAreaFromIndex(indexOfEndPosArea);
+            var endPos = endArea.GetPosition();
 
             var moveSpeed = 10f;
             var distance = Vector3.Distance(startPos, endPos);
             float duration = distance / moveSpeed;
 
-            tappedItem.transform.DOMove(endPos, duration).SetEase(Ease.Linear).OnComplete(() =>
+            tappedItem.transform.DOMove(endPos, duration).SetEase(Ease.Linear);
+
+            var itemsNeedToBeSwipeRight = _matchAreaManager.GetAreasNeedToBeSwipeRight(indexOfEndPosArea);
+
+            if (!endArea.IsEmpty)
             {
-                _matchArea.FillFirstEmptyArea(tappedItem);
-            });
+                itemsNeedToBeSwipeRight.Add(endArea);
+                itemsNeedToBeSwipeRight = itemsNeedToBeSwipeRight.OrderBy(area => area.Index).ToList();
+            }
 
+            _matchAreaManager.SwipeRightAreas(itemsNeedToBeSwipeRight);
 
-
-            //var tappedCellTypeIndex = tappedItem.TypeIndex;
+            endArea.Item = tappedItem;
+            endArea.IsEmpty = false;
         }
 
         private void DestroyMatchedItems(Cell cell)

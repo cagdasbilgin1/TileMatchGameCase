@@ -2,6 +2,7 @@
 {
     public enum ItemType 
     {
+        Default,
         Apple,
         Avocado,
         Watermelon,
