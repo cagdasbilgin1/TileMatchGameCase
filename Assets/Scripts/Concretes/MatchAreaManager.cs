@@ -1,9 +1,14 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TileMatchGame.Controller;
 using TileMatchGame.Enums;
+using TileMatchGame.Manager;
 using UnityEngine;
+using UnityEngine.Events;
+using static UnityEditor.Progress;
 
 public class MatchAreaManager : MonoBehaviour
 {
@@ -11,6 +16,8 @@ public class MatchAreaManager : MonoBehaviour
     [SerializeField] float widthOffset;
     [SerializeField] float heightOffset;
     List<MatchArea> areas;
+
+    public event Action itemsBlastedEvent;
 
     public void Init(int tileCapacity)
     {
@@ -30,20 +37,8 @@ public class MatchAreaManager : MonoBehaviour
             area.transform.localPosition = new Vector2(areaX, 0);
             areas.Add(area);
         }
-    }
 
-    public Vector3 GetFirstEmptyAreaPosition()
-    {
-        var firstEmptyArea = areas.FirstOrDefault(area => area.IsEmpty);
-        if (firstEmptyArea != null)
-        {
-            return firstEmptyArea.transform.position;
-        }
-        else
-        {
-            //there is no empty area
-            return Vector3.zero;
-        }
+        itemsBlastedEvent += RecalculateAndArrangeItems;
     }
 
     public int GetIndexOfAreaNeedToGo(ItemType itemType)
@@ -72,6 +67,11 @@ public class MatchAreaManager : MonoBehaviour
         return areas.Where(area => area.Item != null && area.Index > index).ToList();
     }
 
+    public List<MatchArea> GetAreasNeedToBeSwipeLeft()
+    {
+        return areas.Where(area => area.Item != null).ToList();
+    }
+
     public void SwipeRightAreas(List<MatchArea> areas)
     {
         for (int i = areas.Count - 1; i >= 0; i--)
@@ -79,6 +79,24 @@ public class MatchAreaManager : MonoBehaviour
             var area = areas[i];
             var rightArea = GetAreaFromIndex(area.Index + 1);
             area.SwipeItemRight(rightArea);
+        }
+    }
+
+    public void RecalculateAndArrangeItems()
+    {
+        var finalAreas = areas.Where(area => !area.IsEmpty && area.Item != null).ToList();
+
+        var i = 0;
+        foreach (var area in finalAreas)
+        {
+            area.Item.transform.DOMove(areas[i].GetPosition(), 0.1f).SetEase(Ease.Linear);
+
+            areas[i].IsEmpty = false;
+            areas[i].Item = area.Item;
+
+            area.IsEmpty = true;
+            area.Item = null;
+            i++;
         }
     }
 
@@ -102,5 +120,64 @@ public class MatchAreaManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public List<ItemController> GetItems()
+    {
+        var items = new List<ItemController>();
+        foreach (var area in areas)
+        {
+            if (!area.IsEmpty)
+            {
+                items.Add(area.Item);
+            }
+        }
+
+        return items;
+    }
+
+    public void BlastMatchedItems()
+    {
+        var items = GetItems();
+
+        Dictionary<ItemType, List<ItemController>> itemTypeGroups = new();
+
+        foreach (var item in items)
+        {
+            if (!itemTypeGroups.ContainsKey(item.ItemType))
+            {
+                itemTypeGroups[item.ItemType] = new List<ItemController>();
+            }
+            itemTypeGroups[item.ItemType].Add(item);
+        }
+
+        foreach (var itemTypeGroup in itemTypeGroups)
+        {
+            if (itemTypeGroup.Value.Count >= 3)
+            {
+                BlastItems(itemTypeGroup.Key);
+            }
+        }
+    }
+
+    void BlastItems(ItemType itemType)
+    {
+        var i = 0;
+        Action action = null;
+        var blastAreas = areas.Where(area => area.Item != null && area.Item.ItemType == itemType).ToList();
+        foreach (var area in blastAreas)
+        {
+            if (!area.IsEmpty)
+            {
+                if (i == blastAreas.Count - 1)
+                {
+                    action = itemsBlastedEvent;
+                }
+
+                area.Item.Blast(action);
+                area.IsEmpty = true;
+                i++;
+            }
+        }
     }
 }

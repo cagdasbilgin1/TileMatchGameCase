@@ -51,15 +51,11 @@ namespace TileMatchGame
             _gameManager.metaSceneOpenedEvent += ClearObsoleteParticlesAnimations;
 
             CreateCells();
-
             InitCells();
             FillBoard();
-
             ArrangeBoardPosition();
             ArrangeBoardScale();
             InitMatchArea();
-
-            //GetScreenSectionMiddleWorldPosition();
         }
 
         void ArrangeBoardPosition()
@@ -191,7 +187,10 @@ namespace TileMatchGame
             var distance = Vector3.Distance(startPos, endPos);
             float duration = distance / moveSpeed;
 
-            tappedItem.transform.DOMove(endPos, duration).SetEase(Ease.Linear);
+            tappedItem.transform.DOMove(endPos, duration).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                _matchAreaManager.BlastMatchedItems();
+            });
 
             var itemsNeedToBeSwipeRight = _matchAreaManager.GetAreasNeedToBeSwipeRight(indexOfEndPosArea);
 

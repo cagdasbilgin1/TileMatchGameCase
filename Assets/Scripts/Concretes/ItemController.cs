@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using TileMatchGame.Enums;
 using TileMatchGame.Manager;
+using DG.Tweening;
+using UnityEditor.Rendering;
+using System;
 
 namespace TileMatchGame.Controller
 {
@@ -13,15 +16,10 @@ namespace TileMatchGame.Controller
         Cell _cell;
         FallAnimation _fallAnimation;
         ItemType _itemType;
-        int _typeIndex;
         bool _isNotClickable;
 
         public ItemType ItemType => _itemType;
-        //public bool IsBooster => _itemType == ItemType.Booster;
-        public bool IsNotClickable => _isNotClickable;
-        public int TypeIndex { get { return _typeIndex; } set { _typeIndex = value; } }
-        public bool IsHorizontalRocketBooster;
-
+        public bool IsNotClickable => _isNotClickable; 
 
         public Cell Cell
         {
@@ -87,6 +85,18 @@ namespace TileMatchGame.Controller
         private void Update()
         {
             //_fallAnimation.TickUpdate();
+        }
+
+        public void Blast(Action aitemsBlastedEvent)
+        {
+            transform.DOScale(Vector3.zero, .2f).OnComplete(() =>
+            {
+                if (aitemsBlastedEvent != null)
+                {
+                    aitemsBlastedEvent?.Invoke();
+                }
+                Destroy(gameObject);
+            });
         }
     }
 }

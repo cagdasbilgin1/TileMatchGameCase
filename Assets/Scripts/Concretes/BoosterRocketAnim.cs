@@ -53,66 +53,6 @@ namespace TileMatchGame.Controller
             }
         }
 
-        void FindCells(Cell boosterCell, out bool isHorizontalRocket)
-        {
-            _camera = Camera.main;
-            _board = GameManager.Instance.Board;
-            isHorizontalRocket = boosterCell.Item.IsHorizontalRocketBooster;
-
-            var direction1 = isHorizontalRocket ? Direction.Left : Direction.Up;
-            var direction2 = isHorizontalRocket ? Direction.Right : Direction.Down;
-            var cell1 = _board.GetNeighbourWithDirection(boosterCell, direction1);
-            var cell2 = _board.GetNeighbourWithDirection(boosterCell, direction2);
-            _cellsToExplode.Add(boosterCell);
-
-            while (true)
-            {
-                if (cell1 != null)
-                {
-                    _cellsToExplode.Add(cell1);
-                    cell1 = _board.GetNeighbourWithDirection(cell1, direction1);
-                }
-                if (cell2 != null)
-                {
-                    _cellsToExplode.Add(cell2);
-                    cell2 = _board.GetNeighbourWithDirection(cell2, direction2);
-                }
-
-                if (cell1 == null && cell2 == null) break;
-            }
-        }
-
-        void DestroyCellItems(ItemType goalItemType)
-        {
-            foreach (var cell in _cellsToExplode)
-            {
-                var item = cell.Item;
-                if (item == null) continue;
-                if (item.ItemType == goalItemType)
-                {
-                    _blastedGoalItemCount++;
-                }
-                item.Destroy();
-            }
-        }
-
-        void PlayRocketAnim(bool isHorizontal)
-        {
-            if (isHorizontal)
-            {
-                transform.Rotate(0, 0, 90f, Space.Self);
-                piece1.DOMoveX(piece1.position.x - 10f, 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
-                piece2.DOMoveX(piece1.position.x + 10f, 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
-            }
-            else
-            {
-                piece1.DOMoveY(piece1.position.y + 10f, 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
-                piece2.DOMoveY(piece1.position.y - 10f, 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
-            }
-
-            _isPlaying = true;
-        }
-
         void UpdateGoalChart(ItemType goalItemType)
         {
             _level.UpdateLevelStats(goalItemType, _blastedGoalItemCount);
