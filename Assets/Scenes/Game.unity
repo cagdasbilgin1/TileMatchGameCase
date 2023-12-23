@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &433986616 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7026033552342100677, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
+  m_PrefabInstance: {fileID: 8767403436628893325}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +523,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &866290020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7914826171619385979, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
+  m_PrefabInstance: {fileID: 8767403436628893325}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1862416728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,6 +2129,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1388198026988819237, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
+      propertyPath: m
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7517236996765109520, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: sound
       value: 
@@ -2201,7 +2215,7 @@ PrefabInstance:
       objectReference: {fileID: 1866229036}
     - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: _gamePlaySceneElements.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: _gamePlaySceneElements.Array.data[0]
@@ -2210,7 +2224,11 @@ PrefabInstance:
     - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: _gamePlaySceneElements.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 433986616}
+    - target: {fileID: 8767403435434524838, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
+      propertyPath: _gamePlaySceneElements.Array.data[2]
+      value: 
+      objectReference: {fileID: 866290020}
     - target: {fileID: 8767403435434524842, guid: 6320cab5fb5e220498d343ef1f172ca0, type: 3}
       propertyPath: m_Name
       value: GameManager

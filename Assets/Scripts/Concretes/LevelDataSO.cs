@@ -32,8 +32,7 @@ namespace TileMatchGame.ScriptableObjects
         [SerializeField] float usableScreenWidthRatio;
         [SerializeField] float usableScreenHeightRatio;
         [SerializeField] int minimumBlastableMatch;
-        [SerializeField] int goalCount;
-        [SerializeField] int movesCount;
+        [SerializeField] int matchAreaTileCapacity;
         [SerializeField] List<TierData> tierList = new List<TierData>();
 
         public int Rows => rows;
@@ -42,8 +41,7 @@ namespace TileMatchGame.ScriptableObjects
         public float UsableScreenWidthRatio => usableScreenWidthRatio;
         public float UsableScreenHeightRatio => usableScreenHeightRatio;
         public int MinimumBlastableCell => minimumBlastableMatch;
-        public int GoalCount => goalCount;
-        public int MovesCount => movesCount;
+        public int MatchAreaTileCapacity => matchAreaTileCapacity;
         public List<TierData> TierList => tierList;
     }
 }

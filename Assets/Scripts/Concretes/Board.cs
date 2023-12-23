@@ -14,7 +14,6 @@ namespace TileMatchGame
 {
     public class Board : MonoBehaviour
     {
-        public MatchAreaManager MatchAreaPrefab;
         public Cell CellPrefab;
         public Transform CellsParent;
         public Transform ItemsParent;
@@ -25,12 +24,13 @@ namespace TileMatchGame
         SoundManager _soundManager;
         ItemManager _itemManager;
         MatchFinder _matchFinder;
+        MatchAreaManager _matchAreaManager;
+        LevelManager _LevelManager;
         int _columns, _rows;
         float _distanceBetweenItems;
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
         List<TierData> _tierList;
-        MatchAreaManager _matchAreaManager;
         [SerializeField] float TopAreaRatio;
         [SerializeField] float MiddleAreaRatio;
         [SerializeField] float BottomAreaRatio;
@@ -38,18 +38,22 @@ namespace TileMatchGame
         public void Init()
         {
             _gameManager = GameManager.Instance;
+            _LevelManager = _gameManager.Level;
             _soundManager = _gameManager.SoundManager;
             var gamePlayCanvas = _gameManager.CanvasManager.GamePlayCanvas;
-            _columns = _gameManager.Level.Columns;
-            _rows = _gameManager.Level.Rows;
-            _distanceBetweenItems = _gameManager.Level.DistanceBetweenItems;
-            _usableScreenWidthRatio = _gameManager.Level.UsableScreenWidthRatio;
-            _usableScreenHeightRatio = _gameManager.Level.UsableScreenHeightRatio;
+            _columns = _LevelManager.Columns;
+            _rows = _LevelManager.Rows;
+            _distanceBetweenItems = _LevelManager.DistanceBetweenItems;
+            _usableScreenWidthRatio = _LevelManager.UsableScreenWidthRatio;
+            _usableScreenHeightRatio = _LevelManager.UsableScreenHeightRatio;
             _itemManager = _gameManager.ItemManager;
-            _tierList = _gameManager.Level.TierList;
+            _matchAreaManager = _gameManager.MatchAreaManager;
+            _tierList = _LevelManager.TierList;
             _matchFinder = new MatchFinder();
             _gameManager.metaSceneOpenedEvent += ClearObsoleteParticlesAnimations;
 
+
+            ClearElements();
             CreateCells();
             InitCells();
             FillBoard();
@@ -93,10 +97,8 @@ namespace TileMatchGame
 
         void InitMatchArea()
         {
-            _matchAreaManager = Instantiate(MatchAreaPrefab, Vector3.zero, Quaternion.identity, transform);
-            _matchAreaManager.transform.SetParent(GameManager.Instance.transform);
-            _matchAreaManager.transform.position = GetScreenSectionWorldPosition(1);
-            _matchAreaManager.Init(6);
+            _matchAreaManager.MatchArea.transform.localPosition = GetScreenSectionWorldPosition(1);
+            _matchAreaManager.Init(_LevelManager.CurrentLevelData.MatchAreaTileCapacity);
         }
 
         private void CreateCellDummy()
@@ -117,19 +119,23 @@ namespace TileMatchGame
             }
         }
 
-        private void CreateCells()
+        void CreateCells()
         {
             //CreateCellDummy(); //delete test
             ///
             var tierIndex = 0;
             foreach (var tier in _tierList)
             {
-                var cellTierTransform = new GameObject("Tier" + tierIndex).transform;
-                cellTierTransform.parent = CellsParent;
+                Transform _cellTierTransform = CellsParent.Find("Tier" + tierIndex);
+                if (_cellTierTransform == null)
+                {
+                    _cellTierTransform = new GameObject("Tier" + tierIndex).transform;
+                }
 
+                _cellTierTransform.SetParent(CellsParent);
                 foreach (var item in tier.Cards)
                 {
-                    var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, cellTierTransform);
+                    var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, _cellTierTransform);
                     cell.Position.x = item.Position.x;
                     cell.Position.y = item.Position.y;
                     cell.Tier = tierIndex;
@@ -218,7 +224,7 @@ namespace TileMatchGame
 
             if (partOfMatchedCells == null) return;
 
-            _gameManager.Level.UpdateLevelStats(itemType, partOfMatchedCells.Count);
+            _LevelManager.UpdateLevelStats(itemType, partOfMatchedCells.Count);
             _soundManager.PlaySound(_soundManager.GameSounds.ItemBlastSound);
 
             foreach (var matchedCell in partOfMatchedCells)
@@ -306,7 +312,7 @@ namespace TileMatchGame
                     if (cell != null)
                     {
                         cell.Item = _itemManager.CreateItem(item.ItemType, cell.transform.position);
-                        cell.Item.transform.parent = _itemTierTransform;
+                        cell.Item.transform.SetParent(_itemTierTransform);
                         cell.Item.transform.localScale = Vector3.one;
                     }
                 }

@@ -12,7 +12,7 @@ using static UnityEditor.Progress;
 
 public class MatchAreaManager : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer _spriteRenderer;
+    public SpriteRenderer MatchArea;
     [SerializeField] float widthOffset;
     [SerializeField] float heightOffset;
     List<MatchArea> areas;
@@ -22,14 +22,14 @@ public class MatchAreaManager : MonoBehaviour
     public void Init(int tileCapacity)
     {
         areas = new List<MatchArea>(tileCapacity);
-        _spriteRenderer.size = new Vector2(tileCapacity + widthOffset, 1 + heightOffset);
+        MatchArea.size = new Vector2(tileCapacity + widthOffset, 1 + heightOffset);
         for (int i = 0; i < tileCapacity; i++)
         {
             var startX = (-1 * tileCapacity / 2f) + 1 / 2f; //tile length is 1
             var areaX = startX + i;
 
             var area = new GameObject("area" + i).AddComponent<MatchArea>();
-            area.transform.parent = transform;
+            area.transform.SetParent(MatchArea.transform);
             area.transform.localPosition = Vector3.zero;
             area.transform.localScale = Vector3.one;
             area.IsEmpty = true;

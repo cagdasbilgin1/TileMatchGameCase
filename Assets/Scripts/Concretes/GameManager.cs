@@ -22,6 +22,7 @@ namespace TileMatchGame.Manager
         [HideInInspector] public HintManager HintManager;
         [HideInInspector] public CanvasManager CanvasManager;
         [HideInInspector] public SoundManager SoundManager;
+        [HideInInspector] public MatchAreaManager MatchAreaManager;
 
         void Awake()
         {
@@ -36,6 +37,7 @@ namespace TileMatchGame.Manager
             TouchManager = GetComponent<TouchManager>();
             CanvasManager = GetComponent<CanvasManager>();
             SoundManager = GetComponent<SoundManager>();
+            MatchAreaManager = GetComponent<MatchAreaManager>();
             InitGame();
 
             Level.OnLevelUpEvent += DisableInput;
@@ -49,8 +51,6 @@ namespace TileMatchGame.Manager
             ItemManager.Init();
             HintManager.Init();
             FallManager.Init();
-            //Level.FillBoard();
-            //Board.FillBoard();
         }
 
         private void Update()

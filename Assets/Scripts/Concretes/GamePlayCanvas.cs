@@ -14,33 +14,21 @@ namespace TileMatchGame.Canvas
         [SerializeField] GameObject _levelUpUI;
         [SerializeField] GameObject _gameOverUI;
         LevelManager _level;
-        ItemManager _itemManager;
-        LevelDataSO _levelData;
 
         private void Awake()
         {
             var gameManager = GameManager.Instance;
-            _itemManager = gameManager.ItemManager;
             _level = gameManager.Level;
-            _levelData = gameManager.Level.CurrentLevelData;
 
             _level.OnLevelUpEvent += UpdateLevelData;
             _level.OnLevelUpEvent += ShowLevelUpUI;
             _level.OnGameOverEvent += ShowGameOverUI;
             _level.OnLevelStatsUpdateEvent += UpdateLevelStatsUI;
-            gameManager.gamePlaySceneOpenedEvent += ResetUIs;
-        }
-
-        public void ResetUIs()
-        {
-            _levelGoalCounterText.text = _levelData.GoalCount.ToString();
-            _levelMovesCounterText.text = _levelData.MovesCount.ToString();
-            //_levelGoalItemTypeImage.sprite = _itemManager.GetItemSprite(_levelData.GoalItemType, 0);
         }
 
         public void UpdateLevelData()
         {
-            _levelData = GameManager.Instance.Level.CurrentLevelData;
+            //_levelData = GameManager.Instance.Level.CurrentLevelData;
         }
 
         public void OnBackToMetaButtonClick()

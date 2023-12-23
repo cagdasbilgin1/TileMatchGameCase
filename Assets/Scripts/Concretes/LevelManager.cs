@@ -61,9 +61,6 @@ namespace TileMatchGame.Manager
             _minimumBlastableMatch = _currentLevelData.MinimumBlastableCell;
 
             gameManager.metaSceneOpenedEvent += ResetLevel;
-
-            _goalCount = _currentLevelData.GoalCount;
-            _moveCount = _currentLevelData.MovesCount;
         }
 
         public void LevelUp()
@@ -82,11 +79,8 @@ namespace TileMatchGame.Manager
 
         public void ResetLevel()
         {
-            _goalCount = _currentLevelData.GoalCount;
-            _moveCount = _currentLevelData.MovesCount;
-
             _board.ClearItems();
-            _board.FillBoard();
+            _board.Init();
         }
 
         public void UpdateLevelStats(ItemType blastedItemsType, int blastedItemCount)
