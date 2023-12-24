@@ -12,14 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343209274929d2a46a1cc8a802c7a46f, type: 3}
   m_Name: Level3
   m_EditorClassIdentifier: 
-  rows: 4
-  columns: 6
-  colors: 03000000050000000200000001000000
-  firstSpecialIconTypeThreshold: 4
-  secondSpecialIconTypeThreshold: 7
-  thirdSpecialIconTypeThreshold: 9
-  levelJson: {fileID: 4900000, guid: 9003d89acb34d11479f8e0a5a95ae407, type: 3}
+  rows: 60
+  columns: 40
+  distanceBetweenItems: 0.15
+  usableScreenWidthRatio: 0.8
+  usableScreenHeightRatio: 0.6
   minimumBlastableMatch: 2
-  goalItemType: 1
-  goalCount: 20
-  movesCount: 30
+  matchAreaTileCapacity: 6
+  tierList:
+  - cards:
+    - position: {x: 5, y: 30}
+      itemType: 1
+    - position: {x: 20, y: 22}
+      itemType: 5
+    - position: {x: 35, y: 30}
+      itemType: 6
+  - cards:
+    - position: {x: 5, y: 26}
+      itemType: 1
+    - position: {x: 20, y: 18}
+      itemType: 5
+    - position: {x: 35, y: 26}
+      itemType: 6
+  - cards:
+    - position: {x: 5, y: 22}
+      itemType: 1
+    - position: {x: 20, y: 14}
+      itemType: 5
+    - position: {x: 35, y: 22}
+      itemType: 6

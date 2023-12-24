@@ -55,6 +55,11 @@ namespace TileMatchGame.Manager
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Level.LevelUp(); // for testing, delete
+            }
+
             FallManager.TickUpdate();
             HintManager.TickUpdate();
         }
