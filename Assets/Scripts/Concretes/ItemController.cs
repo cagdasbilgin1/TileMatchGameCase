@@ -87,13 +87,13 @@ namespace TileMatchGame.Controller
             //_fallAnimation.TickUpdate();
         }
 
-        public void Blast(Action aitemsBlastedEvent)
+        public void Blast(Action itemsBlastedEvent)
         {
             transform.DOScale(Vector3.zero, .2f).OnComplete(() =>
             {
-                if (aitemsBlastedEvent != null)
+                if (itemsBlastedEvent != null)
                 {
-                    aitemsBlastedEvent?.Invoke();
+                    itemsBlastedEvent?.Invoke();
                 }
                 Destroy(gameObject);
             });

@@ -115,9 +115,10 @@ MonoBehaviour:
   ParticlesAnimationsParent: {fileID: 5995400758940089987}
   BoardMask: {fileID: 0}
   Cells: []
-  TopAreaRatio: 0.2
-  MiddleAreaRatio: 0.3
-  BottomAreaRatio: 0.5
+  _topAreaRatio: 0.2
+  _middleAreaRatio: 0.3
+  _bottomAreaRatio: 0.5
+  _itemMoveSpeed: 10
 --- !u!1 &2546654285448441811
 GameObject:
   m_ObjectHideFlags: 0

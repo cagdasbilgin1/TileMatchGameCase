@@ -9,6 +9,7 @@ using UnityEditor.Rendering.LookDev;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using System;
 
 namespace TileMatchGame
 {
@@ -31,9 +32,12 @@ namespace TileMatchGame
         float _usableScreenWidthRatio;
         float _usableScreenHeightRatio;
         List<TierData> _tierList;
-        [SerializeField] float TopAreaRatio;
-        [SerializeField] float MiddleAreaRatio;
-        [SerializeField] float BottomAreaRatio;
+        [SerializeField] float _topAreaRatio;
+        [SerializeField] float _middleAreaRatio;
+        [SerializeField] float _bottomAreaRatio;
+        [SerializeField] float _itemMoveSpeed;
+
+        public event Action OnItemMove;
 
         public void Init()
         {
@@ -51,6 +55,7 @@ namespace TileMatchGame
             _tierList = _LevelManager.TierList;
             _matchFinder = new MatchFinder();
             _gameManager.metaSceneOpenedEvent += ClearObsoleteParticlesAnimations;
+            OnItemMove += _gameManager.DisableInput;
 
 
             ClearElements();
@@ -188,14 +193,18 @@ namespace TileMatchGame
             var tappedItem = cell.Item;
             cell.Item = null;
 
+            MoveItemToArea(tappedItem);
+        }
+
+        public void MoveItemToArea(ItemController tappedItem)
+        {
+            OnItemMove?.Invoke();
+
             var startPos = tappedItem.transform.position;
             var indexOfEndPosArea = _matchAreaManager.GetIndexOfAreaNeedToGo(tappedItem.ItemType);
-            
-
             var endArea = _matchAreaManager.GetAreaFromIndex(indexOfEndPosArea);
             var endPos = endArea.GetPosition();
-
-            var moveSpeed = 10f;
+            var moveSpeed = _itemMoveSpeed;
             var distance = Vector3.Distance(startPos, endPos);
             float duration = distance / moveSpeed;
 
@@ -216,27 +225,6 @@ namespace TileMatchGame
 
             endArea.Item = tappedItem;
             endArea.IsEmpty = false;
-        }
-
-        private void DestroyMatchedItems(Cell cell)
-        {
-            var itemType = cell.Item.ItemType;
-            //if (itemType == ItemType.Booster)
-            //{
-            //    return;
-            //}
-
-            var partOfMatchedCells = _matchFinder.FindMatch(cell, itemType);
-
-            if (partOfMatchedCells == null) return;
-
-            _LevelManager.UpdateLevelStats(itemType, partOfMatchedCells.Count);
-            _soundManager.PlaySound(_soundManager.GameSounds.ItemBlastSound);
-
-            foreach (var matchedCell in partOfMatchedCells)
-            {
-                matchedCell.Item.Destroy();
-            }
         }
 
         public Cell GetNeighbourWithDirection(Cell cell, Direction direction)
@@ -331,9 +319,9 @@ namespace TileMatchGame
             var camera = Camera.main;
             float screenHeight = Screen.height;
 
-            float topHeight = screenHeight * BottomAreaRatio;
-            float middleHeight = screenHeight * MiddleAreaRatio;
-            float bottomHeight = screenHeight * TopAreaRatio;
+            float topHeight = screenHeight * _bottomAreaRatio;
+            float middleHeight = screenHeight * _middleAreaRatio;
+            float bottomHeight = screenHeight * _topAreaRatio;
 
             float topPosition = topHeight / 2f;
             float middlePosition = topHeight + middleHeight / 2f;

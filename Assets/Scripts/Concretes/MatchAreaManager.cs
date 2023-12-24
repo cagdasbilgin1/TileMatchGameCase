@@ -16,11 +16,18 @@ public class MatchAreaManager : MonoBehaviour
     [SerializeField] float widthOffset;
     [SerializeField] float heightOffset;
     List<MatchArea> areas;
+    GameManager _gameManager;
 
     public event Action itemsBlastedEvent;
 
+    void Start()
+    {
+        itemsBlastedEvent += RecalculateAndArrangeItems;
+    }
+
     public void Init(int tileCapacity)
     {
+        _gameManager = GameManager.Instance;
         areas = new List<MatchArea>(tileCapacity);
         MatchArea.size = new Vector2(tileCapacity + widthOffset, 1 + heightOffset);
         for (int i = 0; i < tileCapacity; i++)
@@ -37,8 +44,6 @@ public class MatchAreaManager : MonoBehaviour
             area.transform.localPosition = new Vector2(areaX, 0);
             areas.Add(area);
         }
-
-        itemsBlastedEvent += RecalculateAndArrangeItems;
     }
 
     public int GetIndexOfAreaNeedToGo(ItemType itemType)
@@ -86,10 +91,29 @@ public class MatchAreaManager : MonoBehaviour
     {
         var finalAreas = areas.Where(area => !area.IsEmpty && area.Item != null).ToList();
 
+        if (finalAreas.Count == 0)
+        {
+            //there is no item to swipe left
+            _gameManager.EnableInput();
+        }
+
         var i = 0;
         foreach (var area in finalAreas)
         {
-            area.Item.transform.DOMove(areas[i].GetPosition(), 0.1f).SetEase(Ease.Linear);
+            if (area.Index == areas[i].Index)
+            {
+                //no left swiping because all items were on the left
+                _gameManager.EnableInput();
+
+                i++;
+                continue;
+            }
+
+            area.Item.transform.DOMove(areas[i].GetPosition(), 0.1f).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                //left swiping finished
+                _gameManager.EnableInput();
+            });
 
             areas[i].IsEmpty = false;
             areas[i].Item = area.Item;
@@ -151,12 +175,19 @@ public class MatchAreaManager : MonoBehaviour
             itemTypeGroups[item.ItemType].Add(item);
         }
 
+        var blastSection = false;
         foreach (var itemTypeGroup in itemTypeGroups)
         {
             if (itemTypeGroup.Value.Count >= 3)
             {
+                blastSection = true;
                 BlastItems(itemTypeGroup.Key);
             }
+        }
+        if(!blastSection)
+        {
+            //no items exploded
+            _gameManager.EnableInput();
         }
     }
 
