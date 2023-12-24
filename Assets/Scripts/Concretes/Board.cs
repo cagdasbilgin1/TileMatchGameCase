@@ -62,6 +62,7 @@ namespace TileMatchGame
             CreateCells();
             InitCells();
             FillBoard();
+            ArrangeItemsActivity();
             ArrangeBoardPosition();
             ArrangeBoardScale();
             ClearMatchArea();
@@ -112,28 +113,8 @@ namespace TileMatchGame
             _matchAreaManager.Init(_LevelManager.CurrentLevelData.MatchAreaTileCapacity);
         }
 
-        private void CreateCellDummy()
-        {
-            //delete
-            var tierTransform = new GameObject("TierNull").transform;
-            tierTransform.parent = CellsParent;
-            for (var y = 0; y < _rows; y++)
-            {
-                for (var x = 0; x < _columns; x++)
-                {
-                    var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, tierTransform);
-                    cell.Position.x = x;
-                    cell.Position.y = y;
-                    cell.Tier = 0;
-                    cell.Init();
-                }
-            }
-        }
-
         void CreateCells()
         {
-            //CreateCellDummy(); //delete test
-            ///
             var tierIndex = 0;
             foreach (var tier in _tierList)
             {
@@ -194,6 +175,7 @@ namespace TileMatchGame
             cell.Item = null;
 
             MoveItemToArea(tappedItem);
+            ArrangeItemsActivity();
         }
 
         public void MoveItemToArea(ItemController tappedItem)
@@ -225,49 +207,6 @@ namespace TileMatchGame
 
             endArea.Item = tappedItem;
             endArea.IsEmpty = false;
-        }
-
-        public Cell GetNeighbourWithDirection(Cell cell, Direction direction)
-        {
-            //var x = cell.X;
-            //var y = cell.Y;
-
-            //switch (direction)
-            //{
-            //    case Direction.Up:
-            //        y += 1;
-            //        break;
-            //    case Direction.Down:
-            //        y -= 1;
-            //        break;
-            //    case Direction.Right:
-            //        x += 1;
-            //        break;
-            //    case Direction.Left:
-            //        x -= 1;
-            //        break;
-            //    case Direction.UpRight:
-            //        x += 1;
-            //        y += 1;
-            //        break;
-            //    case Direction.UpLeft:
-            //        x -= 1;
-            //        y += 1;
-            //        break;
-            //    case Direction.DownRight:
-            //        x += 1;
-            //        y -= 1;
-            //        break;
-            //    case Direction.DownLeft:
-            //        x -= 1;
-            //        y -= 1;
-            //        break;
-            //}
-
-            //if (x >= _columns || x < 0 || y >= _rows || y < 0) return null;
-
-            //return GetCell(x, y, 1);
-            return null;
         }
 
         public Cell GetCell(Vector2Int position, int tier)
@@ -311,6 +250,34 @@ namespace TileMatchGame
                     }
                 }
                 tierIndex++;
+            }
+        }
+
+        void ArrangeItemsActivity()
+        {
+            bool isTouching = false;
+            foreach (var cell in Cells)
+            {
+                if (cell.Item == null) continue;
+                var tier = cell.Tier;
+                var upperTierCells = Cells.Where(cell => cell.Tier > tier).ToList();
+
+                foreach (var upperCell in upperTierCells)
+                {
+                    if (cell.IsTouching(upperCell))
+                    {
+                        cell.Item.SetTouchInactive();
+                        isTouching = true;
+                        break;
+                    }
+                }
+
+                if (!isTouching)
+                {
+                    cell.Item.SetTouchActive();
+                }
+
+                isTouching = false;
             }
         }
 

@@ -32,4 +32,4 @@ MonoBehaviour:
     - position: {x: 20, y: 20}
       itemType: 2
     - position: {x: 30, y: 20}
-      itemType: 1
+      itemType: 2

@@ -57,34 +57,7 @@ namespace TileMatchGame
 			_board = gameManager.Board;
 			transform.localPosition = new Vector3(Position.x * _distanceBetweenItems, Position.y * _distanceBetweenItems);
             ArrangeCellName();
-			UpdateNeighbours();
-		}
-
-		private void UpdateNeighbours()
-		{
-			var neighBourDirections = new List<Direction>() { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
-            foreach (Direction direction in neighBourDirections)
-            {
-				var neighbour = _board.GetNeighbourWithDirection(this, direction);
-				if (neighbour == null) continue;
-                _neighbours.Add(neighbour);
-				if(direction == Direction.Down)
-				{
-					FallStopPosition = neighbour;
-				}
-            }
-		}
-
-		public List<Cell> CellsInTheBombBoosterArea()
-		{
-			var _cellsInTheBombBoosterArea = new List<Cell>();
-			foreach (Direction direction in Enum.GetValues(typeof(Direction)))
-			{
-				var cell = _board.GetNeighbourWithDirection(this, direction);
-				if(cell == null) continue;
-                _cellsInTheBombBoosterArea.Add(cell);
-			}
-			return _cellsInTheBombBoosterArea;
+			//UpdateNeighbours();
 		}
 
 		private void ArrangeCellName()
@@ -101,5 +74,14 @@ namespace TileMatchGame
 			}
 			return fallTargetCell;
 		}
-	}
+
+        public bool IsTouching(Cell cell)
+        {
+			if(cell.Item == null) return false;
+
+
+            bool isTouching = Mathf.Abs(Position.x - cell.Position.x) <= 6 && Mathf.Abs(Position.y - cell.Position.y) <= 6;
+			return isTouching;
+        }
+    }
 }

@@ -30,6 +30,6 @@ MonoBehaviour:
     - position: {x: 10, y: 20}
       itemType: 6
     - position: {x: 20, y: 20}
-      itemType: 1
+      itemType: 6
     - position: {x: 30, y: 20}
       itemType: 1

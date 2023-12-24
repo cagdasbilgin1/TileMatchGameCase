@@ -32,8 +32,8 @@ namespace TileMatchGame.Controller
 
         void FindCells(Cell boosterCell)
         {
-            _cellsToExplode = boosterCell.CellsInTheBombBoosterArea();
-            _cellsToExplode.Add(boosterCell);
+            //_cellsToExplode = boosterCell.CellsInTheBombBoosterArea();
+            //_cellsToExplode.Add(boosterCell);
         }
 
         void DestroyCellItems(ItemType goalItemType)

@@ -4,6 +4,7 @@ using TileMatchGame.Manager;
 using DG.Tweening;
 using UnityEditor.Rendering;
 using System;
+using Unity.VisualScripting;
 
 namespace TileMatchGame.Controller
 {
@@ -57,6 +58,36 @@ namespace TileMatchGame.Controller
             _fruitSpriteRenderer.sprite = _itemManager.GetItemSprite(_itemType);
         }
 
+        public void SetTouchInactive()
+        {
+            if (_isNotClickable) return;
+            _isNotClickable = true;
+            SwitchToInactiveColor();
+        }
+
+        public void SwitchToInactiveColor()
+        {
+            Color currentTileColor = _spriteRenderer.color;
+            Color currentFruitColor = _spriteRenderer.color;
+            float darkenAmount = .8f;
+            Color darkenedColor = Color.Lerp(Color.white, Color.black, darkenAmount);
+            _spriteRenderer.color = Color.Lerp(currentTileColor, darkenedColor, darkenAmount);
+            _fruitSpriteRenderer.color = Color.Lerp(currentFruitColor, darkenedColor, darkenAmount);
+        }
+
+        public void SetTouchActive()
+        {
+            if (!_isNotClickable) return;
+            _isNotClickable = false;
+            SwitchToOriginalColor();
+        }
+
+        public void SwitchToOriginalColor()
+        {
+            _spriteRenderer.color = Color.white;
+            _fruitSpriteRenderer.color = Color.white;
+        }
+
         public void Destroy()
         {
             if (this == null) return;
@@ -82,10 +113,10 @@ namespace TileMatchGame.Controller
             _isNotClickable = !clickable;
         }
 
-        private void Update()
-        {
-            //_fallAnimation.TickUpdate();
-        }
+        //private void Update()
+        //{
+        //    //_fallAnimation.TickUpdate();
+        //}
 
         public void Blast(Action itemsBlastedEvent)
         {
