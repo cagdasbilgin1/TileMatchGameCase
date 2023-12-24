@@ -305,7 +305,7 @@ namespace TileMatchGame
                     _itemTierTransform = new GameObject("Tier" + tierIndex).transform;
                 }
 
-                _itemTierTransform.parent = ItemsParent;
+                _itemTierTransform.SetParent(ItemsParent, false);
                 foreach (var item in tier.Cards)
                 {
                     var cell = GetCell(item.Position, tierIndex);
