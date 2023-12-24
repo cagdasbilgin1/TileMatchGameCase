@@ -143,7 +143,7 @@ namespace TileMatchGame
                     _cellTierTransform = new GameObject("Tier" + tierIndex).transform;
                 }
 
-                _cellTierTransform.SetParent(CellsParent);
+                _cellTierTransform.SetParent(CellsParent, false);
                 foreach (var item in tier.Cards)
                 {
                     var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, _cellTierTransform);

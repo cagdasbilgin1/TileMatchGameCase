@@ -17,6 +17,9 @@ public class MatchAreaManager : MonoBehaviour
     [SerializeField] float heightOffset;
     List<MatchArea> areas;
     GameManager _gameManager;
+    int _blastedItems;
+
+    public int BlastedItems => _blastedItems;
 
     public event Action itemsBlastedEvent;
 
@@ -186,7 +189,7 @@ public class MatchAreaManager : MonoBehaviour
         }
         if(!blastSection)
         {
-            //no items exploded
+            //no items blasted
             _gameManager.EnableInput();
         }
     }
@@ -205,6 +208,7 @@ public class MatchAreaManager : MonoBehaviour
                     action = itemsBlastedEvent;
                 }
 
+                _blastedItems++;
                 area.Item.Blast(action);
                 area.IsEmpty = true;
                 i++;
@@ -226,5 +230,6 @@ public class MatchAreaManager : MonoBehaviour
             Destroy(area.gameObject);
         }
         areas.Clear();
+        _blastedItems = 0;
     }
 }

@@ -22,9 +22,12 @@ namespace TileMatchGame.Manager
         int _minimumBlastableMatch;
         int _goalCount;
         int _moveCount;
+        int _allItemsCount;
         LevelDataSO _currentLevelData;
         Board _board;
         ItemManager _itemManager;
+        //MatchAreaManager _matchAreaManager;
+        GameManager _gameManager;
         List<ItemType> _itemTypes;
         List<LevelItem> levelItemDatas;
 
@@ -44,13 +47,18 @@ namespace TileMatchGame.Manager
         public event Action OnGameOverEvent;
         public event Action OnLevelStatsUpdateEvent;
 
+        void Start()
+        {
+            _gameManager.metaSceneOpenedEvent += ResetLevel;
+            _gameManager.MatchAreaManager.itemsBlastedEvent += LevelUp;
+        }
+
         public void Init()
         {
+            _gameManager = GameManager.Instance;
             _levelIndex = PlayerPrefs.GetInt(keyLevelIndex, 0);
-
-            var gameManager = GameManager.Instance;
-            _board = gameManager.Board;
-            _itemManager = gameManager.ItemManager;
+            _board = _gameManager.Board;
+            _itemManager = _gameManager.ItemManager;
             _currentLevelData = levels[_levelIndex];
             _rows = _currentLevelData.Rows;
             _columns = _currentLevelData.Columns;
@@ -59,17 +67,19 @@ namespace TileMatchGame.Manager
             _usableScreenHeightRatio = _currentLevelData.UsableScreenHeightRatio;
             _tierList = _currentLevelData.TierList;
             _minimumBlastableMatch = _currentLevelData.MinimumBlastableCell;
-
-            gameManager.metaSceneOpenedEvent += ResetLevel;
+            _allItemsCount = GetTotalItemCount();
         }
 
         public void LevelUp()
         {
-            _levelIndex++;
-            _levelIndex = _levelIndex < levels.Count ? _levelIndex : 0;
-            _currentLevelData = levels[_levelIndex];
-            PlayerPrefs.SetInt(keyLevelIndex, _levelIndex);
-            OnLevelUpEvent?.Invoke();
+            if (_gameManager.MatchAreaManager.BlastedItems >= _allItemsCount)
+            {
+                _levelIndex++;
+                _levelIndex = _levelIndex < levels.Count ? _levelIndex : 0;
+                _currentLevelData = levels[_levelIndex];
+                PlayerPrefs.SetInt(keyLevelIndex, _levelIndex);
+                OnLevelUpEvent?.Invoke();
+            }
         }
 
         public void GameOver()
@@ -117,6 +127,18 @@ namespace TileMatchGame.Manager
             }
 
             return _itemTypes[i];
+        }
+
+        public int GetTotalItemCount()
+        {
+            var totalItemCount = 0;
+
+            foreach (var tier in _currentLevelData.TierList)
+            {
+                totalItemCount += tier.Cards.Count;
+            }
+
+            return totalItemCount;
         }
     }
 }
