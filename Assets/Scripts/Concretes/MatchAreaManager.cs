@@ -180,4 +180,20 @@ public class MatchAreaManager : MonoBehaviour
             }
         }
     }
+
+    public void Clear()
+    {
+        if (areas == null) return;
+
+        foreach (var area in areas)
+        {
+            if (area.Item != null)
+            {
+                Destroy(area.Item.gameObject);
+            }
+
+            Destroy(area.gameObject);
+        }
+        areas.Clear();
+    }
 }

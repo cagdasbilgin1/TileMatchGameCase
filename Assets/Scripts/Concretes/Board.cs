@@ -59,6 +59,7 @@ namespace TileMatchGame
             FillBoard();
             ArrangeBoardPosition();
             ArrangeBoardScale();
+            ClearMatchArea();
             InitMatchArea();
         }
 
@@ -93,6 +94,11 @@ namespace TileMatchGame
                 boardHeight -= (boardHeight * .05f);
                 boardWidth -= (boardWidth * .05f);
             }
+        }
+
+        void ClearMatchArea()
+        {
+            _matchAreaManager.Clear();
         }
 
         void InitMatchArea()
