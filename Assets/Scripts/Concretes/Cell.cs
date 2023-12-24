@@ -79,8 +79,8 @@ namespace TileMatchGame
         {
 			if(cell.Item == null) return false;
 
-
-            bool isTouching = Mathf.Abs(Position.x - cell.Position.x) <= 6 && Mathf.Abs(Position.y - cell.Position.y) <= 6;
+			var offset = (int)(1 / _distanceBetweenItems);
+            bool isTouching = Mathf.Abs(Position.x - cell.Position.x) <= offset && Mathf.Abs(Position.y - cell.Position.y) <= offset;
 			return isTouching;
         }
     }
