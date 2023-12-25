@@ -97,19 +97,14 @@ namespace TileMatchGame.Controller
 
         public void ArrangeSorting()
         {
-            _spriteRenderer.sortingOrder = _cell.Tier * 10;
-            _fruitSpriteRenderer.sortingOrder = _cell.Tier * 10 + 1;
+            _spriteRenderer.sortingOrder = _cell.Tier * 100 + _cell.Position.y;
+            _fruitSpriteRenderer.sortingOrder = _spriteRenderer.sortingOrder + 1;
         }
 
         public void ArrangeClickable(bool clickable)
         {
             _isNotClickable = !clickable;
         }
-
-        //private void Update()
-        //{
-        //    //_fallAnimation.TickUpdate();
-        //}
 
         public void Blast(Action itemsBlastedEvent)
         {

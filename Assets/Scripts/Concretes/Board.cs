@@ -19,7 +19,6 @@ namespace TileMatchGame
         public Transform CellsParent;
         public Transform ItemsParent;
         public Transform ParticlesAnimationsParent;
-        public SpriteMask BoardMask;
         [HideInInspector] public List<Cell> Cells;
         GameManager _gameManager;
         SoundManager _soundManager;

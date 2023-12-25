@@ -17,7 +17,9 @@ public class MatchAreaManager : MonoBehaviour
     [SerializeField] float heightOffset;
     List<MatchArea> areas;
     GameManager _gameManager;
+    LevelManager _level;
     int _blastedItems;
+    int _tileCapacity;
 
     public int BlastedItems => _blastedItems;
 
@@ -31,6 +33,8 @@ public class MatchAreaManager : MonoBehaviour
     public void Init(int tileCapacity)
     {
         _gameManager = GameManager.Instance;
+        _level = _gameManager.Level;
+        _tileCapacity = tileCapacity;
         areas = new List<MatchArea>(tileCapacity);
         MatchArea.size = new Vector2(tileCapacity + widthOffset, 1 + heightOffset);
         for (int i = 0; i < tileCapacity; i++)
@@ -187,10 +191,20 @@ public class MatchAreaManager : MonoBehaviour
                 BlastItems(itemTypeGroup.Key);
             }
         }
-        if(!blastSection)
+        if (!blastSection)
         {
             //no items blasted
             _gameManager.EnableInput();
+
+            CheckGameOver();
+        }
+    }
+
+    void CheckGameOver()
+    {
+        if (GetItems().Count >= _tileCapacity)
+        {
+            _level.GameOver();
         }
     }
 

@@ -113,7 +113,6 @@ MonoBehaviour:
   CellsParent: {fileID: 2546654285448441808}
   ItemsParent: {fileID: 2546654285268759037}
   ParticlesAnimationsParent: {fileID: 5995400758940089987}
-  BoardMask: {fileID: 0}
   Cells: []
   _topAreaRatio: 0.2
   _middleAreaRatio: 0.3
@@ -260,7 +259,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b0ab36b9f11f084cb51fc13fd426723, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.17735851, g: 0.10541118, b: 0.10541118, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -366,11 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66de42c21c23f1549848908b2a124d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startVelocity: 0.4
-  _acceleration: 0.3
-  _maxVelocity: 12
   _itemTypesData: {fileID: 11400000, guid: 758ef6ed59219a541a702441339c7942, type: 2}
-  _boosterAnimations: {fileID: 0}
   _itemPrefab: {fileID: 7505205692469373977, guid: 26f8f46f235e6334690557ade4ea8688, type: 3}
 --- !u!114 &8767403435434524839
 MonoBehaviour:
