@@ -15,7 +15,6 @@ namespace TileMatchGame.Controller
         [SerializeField] Animator _animator;
         ItemManager _itemManager;
         Cell _cell;
-        FallAnimation _fallAnimation;
         ItemType _itemType;
         bool _isNotClickable;
 
@@ -49,7 +48,6 @@ namespace TileMatchGame.Controller
         {
             _itemType = itemType;
             _itemManager = GameManager.Instance.ItemManager;
-            //_fallAnimation = new FallAnimation(_itemManager.FallAnimData, this);
             transform.position = pos;
         }
 
@@ -95,11 +93,6 @@ namespace TileMatchGame.Controller
             _cell.Item = null;
             _cell = null;
             Destroy(gameObject);
-        }
-
-        public void Fall()
-        {
-            _fallAnimation.FallTo(_cell.GetFallTargetCell());
         }
 
         public void ArrangeSorting()

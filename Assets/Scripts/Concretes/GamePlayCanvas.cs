@@ -20,26 +20,13 @@ namespace TileMatchGame.Canvas
             var gameManager = GameManager.Instance;
             _level = gameManager.Level;
 
-            _level.OnLevelUpEvent += UpdateLevelData;
             _level.OnLevelUpEvent += ShowLevelUpUI;
             _level.OnGameOverEvent += ShowGameOverUI;
-            _level.OnLevelStatsUpdateEvent += UpdateLevelStatsUI;
-        }
-
-        public void UpdateLevelData()
-        {
-            //_levelData = GameManager.Instance.Level.CurrentLevelData;
         }
 
         public void OnBackToMetaButtonClick()
         {
             GameManager.Instance.ToggleScene();
-        }
-
-        public void UpdateLevelStatsUI()
-        {
-            _levelGoalCounterText.text = _level.GoalCount.ToString();
-            _levelMovesCounterText.text = _level.MoveCount.ToString();
         }
 
         void ShowLevelUpUI()

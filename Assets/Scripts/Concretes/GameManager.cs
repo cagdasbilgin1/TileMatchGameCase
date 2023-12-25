@@ -17,7 +17,6 @@ namespace TileMatchGame.Manager
 
         [HideInInspector] public LevelManager Level;
         [HideInInspector] public ItemManager ItemManager;
-        [HideInInspector] public FallManager FallManager;
         [HideInInspector] public TouchManager TouchManager;
         [HideInInspector] public HintManager HintManager;
         [HideInInspector] public CanvasManager CanvasManager;
@@ -31,7 +30,6 @@ namespace TileMatchGame.Manager
             Application.targetFrameRate = 120;
 
             HintManager = new HintManager();
-            FallManager = new FallManager();
             Level = GetComponent<LevelManager>();
             ItemManager = GetComponent<ItemManager>();
             TouchManager = GetComponent<TouchManager>();
@@ -48,26 +46,21 @@ namespace TileMatchGame.Manager
         {
             Level.Init();
             Board.Init();
-            ItemManager.Init();
             HintManager.Init();
-            FallManager.Init();
         }
 
         private void Update()
         {
-            FallManager.TickUpdate();
             HintManager.TickUpdate();
         }
 
         public void EnableInput()
         {
-            //only affects item touches
             TouchManager.enabled = true;
         }
 
         public void DisableInput()
         {
-            //only affects item touches
             TouchManager.enabled = false;
         }
 

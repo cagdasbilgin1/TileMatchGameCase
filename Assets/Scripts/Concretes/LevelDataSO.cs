@@ -31,7 +31,6 @@ namespace TileMatchGame.ScriptableObjects
         [SerializeField] float distanceBetweenItems;
         [SerializeField] float usableScreenWidthRatio;
         [SerializeField] float usableScreenHeightRatio;
-        [SerializeField] int minimumBlastableMatch;
         [SerializeField] int matchAreaTileCapacity;
         [SerializeField] List<TierData> tierList = new List<TierData>();
 
@@ -40,7 +39,6 @@ namespace TileMatchGame.ScriptableObjects
         public float DistanceBetweenItems => distanceBetweenItems;
         public float UsableScreenWidthRatio => usableScreenWidthRatio;
         public float UsableScreenHeightRatio => usableScreenHeightRatio;
-        public int MinimumBlastableCell => minimumBlastableMatch;
         public int MatchAreaTileCapacity => matchAreaTileCapacity;
         public List<TierData> TierList => tierList;
     }

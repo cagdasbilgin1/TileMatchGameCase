@@ -18,7 +18,7 @@ MonoBehaviour:
   usableScreenWidthRatio: 0.8
   usableScreenHeightRatio: 0.6
   minimumBlastableMatch: 2
-  matchAreaTileCapacity: 6
+  matchAreaTileCapacity: 5
   tierList:
   - cards:
     - position: {x: 10, y: 40}

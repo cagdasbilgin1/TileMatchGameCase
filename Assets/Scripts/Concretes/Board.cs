@@ -24,9 +24,8 @@ namespace TileMatchGame
         GameManager _gameManager;
         SoundManager _soundManager;
         ItemManager _itemManager;
-        MatchFinder _matchFinder;
         MatchAreaManager _matchAreaManager;
-        LevelManager _LevelManager;
+        LevelManager _level;
         int _columns, _rows;
         float _distanceBetweenItems;
         float _usableScreenWidthRatio;
@@ -42,18 +41,17 @@ namespace TileMatchGame
         public void Init()
         {
             _gameManager = GameManager.Instance;
-            _LevelManager = _gameManager.Level;
+            _level = _gameManager.Level;
             _soundManager = _gameManager.SoundManager;
             var gamePlayCanvas = _gameManager.CanvasManager.GamePlayCanvas;
-            _columns = _LevelManager.Columns;
-            _rows = _LevelManager.Rows;
-            _distanceBetweenItems = _LevelManager.DistanceBetweenItems;
-            _usableScreenWidthRatio = _LevelManager.UsableScreenWidthRatio;
-            _usableScreenHeightRatio = _LevelManager.UsableScreenHeightRatio;
+            _columns = _level.Columns;
+            _rows = _level.Rows;
+            _distanceBetweenItems = _level.DistanceBetweenItems;
+            _usableScreenWidthRatio = _level.UsableScreenWidthRatio;
+            _usableScreenHeightRatio = _level.UsableScreenHeightRatio;
             _itemManager = _gameManager.ItemManager;
             _matchAreaManager = _gameManager.MatchAreaManager;
-            _tierList = _LevelManager.TierList;
-            _matchFinder = new MatchFinder();
+            _tierList = _level.TierList;
             _gameManager.metaSceneOpenedEvent += ClearObsoleteParticlesAnimations;
             OnItemMove += _gameManager.DisableInput;
 
@@ -110,11 +108,31 @@ namespace TileMatchGame
         void InitMatchArea()
         {
             _matchAreaManager.MatchArea.transform.localPosition = GetScreenSectionWorldPosition(1);
-            _matchAreaManager.Init(_LevelManager.CurrentLevelData.MatchAreaTileCapacity);
+            _matchAreaManager.Init(_level.MatchAreaTileCapacity);
+        }
+
+        private void CreateCellDummy()
+        {
+            //delete
+            var tierTransform = new GameObject("TierNull").transform;
+            tierTransform.parent = CellsParent;
+            for (var y = 0; y < _rows; y++)
+            {
+                for (var x = 0; x < _columns; x++)
+                {
+                    var cell = Instantiate(CellPrefab, Vector3.zero, Quaternion.identity, tierTransform);
+                    cell.Position.x = x;
+                    cell.Position.y = y;
+                    cell.Tier = 0;
+                    cell.Init();
+                }
+            }
         }
 
         void CreateCells()
         {
+            //CreateCellDummy();
+
             var tierIndex = 0;
             foreach (var tier in _tierList)
             {
