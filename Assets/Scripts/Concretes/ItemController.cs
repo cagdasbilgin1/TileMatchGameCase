@@ -59,6 +59,7 @@ namespace TileMatchGame.Controller
         public void SetTouchInactive()
         {
             if (_isNotClickable) return;
+            Cell.GetComponent<BoxCollider2D>().enabled = false;
             _isNotClickable = true;
             SwitchToInactiveColor();
         }
@@ -76,6 +77,7 @@ namespace TileMatchGame.Controller
         public void SetTouchActive()
         {
             if (!_isNotClickable) return;
+            Cell.GetComponent<BoxCollider2D>().enabled = true;
             _isNotClickable = false;
             SwitchToOriginalColor();
         }

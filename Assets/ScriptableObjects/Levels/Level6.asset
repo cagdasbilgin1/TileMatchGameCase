@@ -17,19 +17,44 @@ MonoBehaviour:
   distanceBetweenItems: 0.15
   usableScreenWidthRatio: 0.8
   usableScreenHeightRatio: 0.6
-  minimumBlastableMatch: 2
   matchAreaTileCapacity: 6
   tierList:
   - cards:
     - position: {x: 10, y: 40}
       itemType: 6
     - position: {x: 20, y: 40}
-      itemType: 1
+      itemType: 5
     - position: {x: 30, y: 40}
-      itemType: 1
+      itemType: 5
     - position: {x: 10, y: 20}
-      itemType: 6
+      itemType: 3
     - position: {x: 20, y: 20}
       itemType: 6
     - position: {x: 30, y: 20}
-      itemType: 1
+      itemType: 6
+  - cards:
+    - position: {x: 10, y: 39}
+      itemType: 5
+    - position: {x: 20, y: 39}
+      itemType: 6
+    - position: {x: 30, y: 39}
+      itemType: 3
+    - position: {x: 10, y: 19}
+      itemType: 5
+    - position: {x: 20, y: 19}
+      itemType: 3
+    - position: {x: 30, y: 19}
+      itemType: 5
+  - cards:
+    - position: {x: 10, y: 38}
+      itemType: 5
+    - position: {x: 20, y: 38}
+      itemType: 3
+    - position: {x: 30, y: 38}
+      itemType: 6
+    - position: {x: 10, y: 18}
+      itemType: 3
+    - position: {x: 20, y: 18}
+      itemType: 3
+    - position: {x: 30, y: 18}
+      itemType: 6

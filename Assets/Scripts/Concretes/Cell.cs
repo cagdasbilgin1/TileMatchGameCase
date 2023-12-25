@@ -9,15 +9,12 @@ namespace TileMatchGame
 {
 	public class Cell : MonoBehaviour
 	{
-        //[HideInInspector] public int X;
-		//[HideInInspector] public int Y;
 		[HideInInspector] public Vector2Int Position;
         [HideInInspector] public int Tier;
         [HideInInspector] public Cell FallStopPosition;
 		[HideInInspector] public bool IsTopRowCell;
         
 		ItemController _item;
-        Board _board;
 		float _distanceBetweenItems;
 
         List<Cell> _neighbours = new List<Cell>();
@@ -48,16 +45,11 @@ namespace TileMatchGame
 
 		public void Init()
 		{
-			//X = x;
-			//Y = y;
 			var gameManager = GameManager.Instance;
 			var level = gameManager.Level;
-			//IsTopRowCell = Y == level.Rows - 1;
 			_distanceBetweenItems = level.DistanceBetweenItems;
-			_board = gameManager.Board;
 			transform.localPosition = new Vector3(Position.x * _distanceBetweenItems, Position.y * _distanceBetweenItems);
             ArrangeCellName();
-			//UpdateNeighbours();
 		}
 
 		private void ArrangeCellName()

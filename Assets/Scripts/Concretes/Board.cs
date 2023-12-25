@@ -191,7 +191,8 @@ namespace TileMatchGame
 
             var tappedItem = cell.Item;
             cell.Item = null;
-
+            
+            cell.GetComponent<BoxCollider2D>().enabled = false;
             MoveItemToArea(tappedItem);
             ArrangeItemsActivity();
         }
