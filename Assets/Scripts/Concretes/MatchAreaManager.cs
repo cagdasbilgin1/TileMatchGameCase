@@ -8,7 +8,6 @@ using TileMatchGame.Enums;
 using TileMatchGame.Manager;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEditor.Progress;
 
 public class MatchAreaManager : MonoBehaviour
 {
