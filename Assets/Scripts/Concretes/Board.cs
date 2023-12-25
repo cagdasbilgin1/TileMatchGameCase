@@ -60,6 +60,7 @@ namespace TileMatchGame
             CreateCells();
             InitCells();
             FillBoard();
+            ArrangeItemSprites();
             ArrangeItemsActivity();
             ArrangeBoardPosition();
             ArrangeBoardScale();
@@ -319,6 +320,17 @@ namespace TileMatchGame
                 case 2: return camera.ScreenToWorldPoint(new Vector2(Screen.width / 2f, middlePosition));
                 case 3: return camera.ScreenToWorldPoint(new Vector2(Screen.width / 2f, bottomPosition));
                 default: return Vector2.zero;
+            }
+        }
+
+        public void ArrangeItemSprites()
+        {
+            foreach (var cell in Cells)
+            {
+                if (cell.Item == null) continue;
+
+                cell.Item.ArrangeSorting();
+                cell.Item.ArrangeFruitSprite();
             }
         }
     }
